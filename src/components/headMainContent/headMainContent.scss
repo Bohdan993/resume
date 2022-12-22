@@ -1,0 +1,30 @@
+@use "sass:math";
+.row .main-content {
+   flex: 0 0 46.4%;
+   padding: 51px 30px;
+}
+.main-content {
+   background: #f6f8fa;
+
+   &__back {
+      display: inline-flex;
+      color: #838799 !important;
+      &:not(:last-child) {
+         margin-bottom: 26px;
+      }
+   }
+   &__title {
+      font-weight: 400;
+      font-size: 30px;
+      line-height: math.div(35, 30);
+   }
+   &__description {
+      font-weight: 350;
+      line-height: math.div(19, 16);
+      color: #838799;
+      margin-bottom: 0;
+   }
+}
+.row.row-main {
+   flex-wrap: nowrap;
+}

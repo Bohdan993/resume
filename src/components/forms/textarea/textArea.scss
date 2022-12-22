@@ -1,0 +1,50 @@
+textarea.form-control {
+   border: 1px solid #dadce3;
+   border-radius: 12px;
+   resize: none;
+   padding: 17px 17px 45px 17px;
+   font-weight: 350;
+   height: 150px;
+}
+.textarea {
+   &__item {
+      position: relative;
+   }
+   &__contols {
+      position: absolute;
+      left: 2px;
+      bottom: 1px;
+      border-radius: 12px 0 0 12px;
+      padding: 5px 5px 15px 15px;
+      display: flex;
+      gap: 8px;
+      background: #ffff;
+   }
+   &__button {
+      width: 20px;
+      height: 20px;
+      transition: all 0.3s cubic-bezier(0.5, 0.02, 0.13, 0.5);
+      @media (any-hover: hover) {
+         &:hover {
+            opacity: 0.8;
+         }
+      }
+   }
+   &__button-group {
+      display: inline-flex;
+      gap: 8px;
+      padding: 0 8px;
+      border-left: 1px solid #eef0f2;
+      border-right: 1px solid #eef0f2;
+   }
+   &__prewrite-button {
+      position: absolute;
+      top: 17px;
+      right: 17px;
+      display: inline-flex;
+      align-items: center;
+      z-index: 2;
+      gap: 8px;
+      color: #838799;
+   }
+}

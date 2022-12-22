@@ -1,0 +1,18 @@
+.skills {
+   &__item {
+      background: #eef0f2;
+      border-radius: 8px;
+      padding: 10px;
+   }
+   &__title {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 23px;
+   }
+   &__selected-items {
+      background: #ffffff;
+      border: 1px solid #dadce3;
+      border-radius: 12px;
+      padding: 17px;
+   }
+}

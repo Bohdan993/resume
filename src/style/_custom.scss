@@ -1,0 +1,57 @@
+.r-gap-30 {
+   row-gap: 30px;
+}
+.btn-blue {
+   display: inline-flex;
+   background: #3679fd;
+   border-radius: 12px;
+   height: 56px;
+   width: 100%;
+   align-items: center;
+   justify-content: center;
+   color: #fff;
+   @media (any-hover: hover) {
+      &:hover {
+         background: #1856d3;
+         color: #fff;
+      }
+   }
+}
+.form-floating .form-control {
+   border: 1px solid #dadce3;
+   border-radius: 12px;
+   padding: 0 16px;
+   font-size: 16px;
+}
+.form-floating .form-label {
+   color: #838799;
+}
+.custom-select {
+   height: 54px;
+   border: 1px solid #dadce3;
+   border-radius: 10px;
+   font-weight: 350;
+   color: #838799;
+}
+input.form-control {
+   border: 1px solid #dadce3;
+   border-radius: 10px;
+   height: 54px;
+   font-weight: 350;
+}
+.form-check-label {
+   color: #838799;
+   top: 4px;
+   position: relative;
+}
+.btn-outline-secondary {
+   border: 1px solid #dadce3;
+   border-radius: 12px;
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 21px;
+   color: #838799;
+}
+.btn-skip {
+   width: 220px;
+}
