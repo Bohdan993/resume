@@ -1,93 +1,50 @@
 
 import { useState } from "react";
 import {
-   CForm,
    CFormInput,
    CCol,
    CRow,
    CButton
 } from "@coreui/react";
-import { useNavigate } from "react-router-dom"
-import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg'
-import { ReactComponent as DownIcon } from '../../../images/icons/down.svg'
-import axios from 'axios';
-import FormData from "form-data";
+import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
+import { ReactComponent as DownIcon } from '../../../images/icons/down.svg';
+import { withFormik } from 'formik';
+import { withForm } from "../../../HOC/withForm";
 
-const FormContact = () => {
+const noop = () => {}
+
+const FormContact = (props) => {
+   const {
+      values,
+      // touched,
+      // errors,
+      handleChange,
+      handleBlur,
+    } = props;
+
    const [visibleAllInputs, setVisibleAllInputs] = useState(false);
-   let navigate = useNavigate();
-   const [firstName, setFirstName] = useState('');
-   const [lastName, setLastName] = useState('');
-   const [email, setEmail] = useState('');
-   const [phone, setPhone] = useState('');
-   const [country, setCountry] = useState('');
-   const [nationality, setNationality] = useState('');
-   const [city, setCity] = useState('');
-   const [adress, setAdress] = useState('');
-   const [zioCode, setZioCode] = useState('');
-   const [driverLicense, setDriverLicense] = useState('');
-   const [place, setPlace] = useState('');
-   const [date, setDate] = useState('');
-   const [selectedFile, setSelectedFile] = useState(null);
+
 
    const handleChangeVisibility = (e) => {
       e.preventDefault();
       setVisibleAllInputs(prev => !prev);
    }
-   const handleFileSelect = (event) => {
-      setSelectedFile(event.target.files[0])
-   }
-   const formSubmit = (e) => {
-      e.preventDefault();
-      const formData = new FormData();
 
-      formData.append('date_of_birth', date);
-      formData.append('driver_license', driverLicense);
-      formData.append('zip_code', city);
-      formData.append('city', date);
-      formData.append('phone', phone);
-      formData.append('place_of_birth', place);
-      formData.append('last_name', lastName);
-      formData.append('address', adress);
-      formData.append('country', country);
-      formData.append('first_name', firstName);
-      formData.append('nationality', nationality);
-      formData.append('email', email);
-      formData.append('picture', selectedFile);
 
-      axios.post('http://resume.waytrel.pro/profile/basic/',
-         formData,
-         { headers: { 'Content-Type': 'multipart/form-data' }, })
-         .then(res => {
-            if (res.data.status === 'session_data_saved') {
-               console.log(res.data.session_id);
-               navigate('/login', {
-                  state: {
-                     sessionId: res.data.session_id
-                  }
-               });
-            }
-         }
-         )
-         .catch((error) => console.log(error))
-   }
-   const handleClick = () => {
-      navigate('/login');
-   }
    const classButton = visibleAllInputs ? 'active show-hidden' : 'show-hidden';
    const textInButton = visibleAllInputs ? 'Hide additional details' : 'Edit additional details';
 
    return (
-      <CForm onSubmit={formSubmit} className="row r-gap-30">
+      <>
          <CRow>
             <CCol xs={6} className="gap-3">
-               <CFormInput onChange={(e) => setFirstName(e.target.value)} value={firstName} className="mb-3" type="text" floatingLabel="First Name" placeholder="First Name" />
-               <CFormInput onChange={(e) => setLastName(e.target.value)} value={lastName} type="text" floatingLabel="Last Name" placeholder="Last Name" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['first-name']} className="mb-3" type="text" floatingLabel="First Name" placeholder="First Name" name="first-name"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['last-name']} type="text" floatingLabel="Last Name" placeholder="Last Name" name="last-name"/>
             </CCol>
             <CCol xs={6}>
                <div className="add-photo">
                   <img alt="" className="add-photo__image" />
-                  <input onChange={handleFileSelect} hidden type="file" id='upload' className="add-photo__input" />
+                  <input onChange={noop} hidden type="file" id='upload' className="add-photo__input" name="image"/>
                   <label className="add-photo__label" htmlFor="upload">
                      <PlusIcon />
                      Add Photo
@@ -97,36 +54,36 @@ const FormContact = () => {
          </CRow>
          <CRow className="g-30 r-gap-30">
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setEmail(e.target.value)} value={email} type="email" floatingLabel="E-mail*" placeholder="E-mail*" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['email']} type="email" floatingLabel="E-mail*" placeholder="E-mail*" name="email"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setPhone(e.target.value)} value={phone} type="phone" floatingLabel="Phone" placeholder="Phone" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['phone']} type="phone" floatingLabel="Phone" placeholder="Phone" name="phone" />
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setCountry(e.target.value)} value={country} type="text" floatingLabel="Country" placeholder="Country" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['country']} type="text" floatingLabel="Country" placeholder="Country" name="country"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setCity(e.target.value)} value={city} type="text" floatingLabel="City" placeholder="City" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['city']} type="text" floatingLabel="City" placeholder="City" name="city"/>
             </CCol>
          </CRow>
          {visibleAllInputs && <CRow className="g-30 r-gap-30">
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setAdress(e.target.value)} value={adress} type="text" floatingLabel="Adress" placeholder="Adress" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['address']} type="text" floatingLabel="Adress" placeholder="Adress" name="address"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setZioCode(e.target.value)} value={zioCode} type="text" floatingLabel="Zio Code" placeholder="Zio Code" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['zio-code']} type="text" floatingLabel="Zio Code" placeholder="Zio Code" name="zio-code"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setDriverLicense(e.target.value)} value={driverLicense} type="text" floatingLabel="Driver license" placeholder="Driver license" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['driver-license']} type="text" floatingLabel="Driver license" placeholder="Driver license" name="driver-license"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setNationality(e.target.value)} value={nationality} type="text" floatingLabel="Nationality" placeholder="Nationality" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['nationality']} type="text" floatingLabel="Nationality" placeholder="Nationality" name="nationality"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setPlace(e.target.value)} value={place} type="text" floatingLabel="Place of birth" placeholder="Place of birth" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['place-of-birth']} type="text" floatingLabel="Place of birth" placeholder="Place of birth" name="place-of-birth"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setDate(e.target.value)} value={date} type="date" floatingLabel="Date of birth" placeholder="Date of birth" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['date-of-birth']} type="date" floatingLabel="Date of birth" placeholder="Date of birth" name="date-of-birth"/>
             </CCol>
          </CRow>}
 
@@ -139,8 +96,32 @@ const FormContact = () => {
          <CCol>
             <CButton type="submit" color="blue">Continue</CButton>
          </CCol>
-      </CForm>
+         </>
+
    )
 }
 
-export default FormContact;
+export default withFormik({ 
+   mapPropsToValues: () => (
+      { 
+         "first-name": '',
+         "last-name": '',
+         email: '',
+         phone: '',
+         country: '',
+         city: '',
+         address: '',
+         "zio-code": '',
+         "driver-license": '',
+         "nationality": '',
+         "place-of-birth": '',
+         "date-of-birth": ''
+      }
+      ),
+   handleSubmit: (values, { setSubmitting }) => {
+      setTimeout(() => {
+        alert(JSON.stringify(values, null, 2));
+        setSubmitting(false);
+      }, 1000);
+    },
+})(withForm(FormContact));

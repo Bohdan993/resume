@@ -4,7 +4,6 @@ import {
    BrowserRouter,
    Routes,
    Route,
-   Link,
 } from "react-router-dom";
 import LoginPage from '../loginPage/LoginPage.js'
 import Contact from '../sections/contact/Contact';
