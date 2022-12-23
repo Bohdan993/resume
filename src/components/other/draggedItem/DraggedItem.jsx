@@ -3,12 +3,13 @@ import uuid from "react-uuid";
 
 import { ReactComponent as DeleteIcon } from "../../../images/icons/delete.svg";
 import { ReactComponent as DragIcon } from "../../../images/icons/many-dots.svg";
+import { ReactComponent as ArrowLeft } from "../../../images/icons/arrow-left.svg";
 
 import "./DraggedItem.scss";
 
-const DraggedItem = ({ title, skillsList, onDelete, onClick }) => {
+const DraggedItem = ({ title, skillsList, onDelete, onClick, selected }) => {
   return (
-    <div onClick={onClick} className="dragged__item p-3 d-flex justify-content-between align-items-center gap-2">
+    <div onClick={onClick} className={`dragged__item p-3 d-flex justify-content-between align-items-center gap-2 ${selected ? 'selected' : false}`}>
       <span className="dragged__drag w-20">
         <DragIcon />
       </span>
@@ -22,9 +23,12 @@ const DraggedItem = ({ title, skillsList, onDelete, onClick }) => {
           ))}
         </CRow>
       </div>
-      <span onClick={onDelete} className="dragged__delete">
+      {selected ? (<span onClick={onClick} className="dragged__arrow">
+        <ArrowLeft />
+      </span>) : <span onClick={onDelete} className="dragged__delete">
         <DeleteIcon />
-      </span>
+      </span>}
+
     </div>
   );
 };

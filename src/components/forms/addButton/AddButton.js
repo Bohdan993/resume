@@ -3,7 +3,7 @@ import './addButton.scss'
 const AddButton = (props) => {
 
    return (
-      <button className="addButton ">
+      <button className="addButton" {...props}>
          <AddIcon />
          {props.text}
       </button>

@@ -1,5 +1,5 @@
 import {
-    CForm
+    CForm, CCol, CButton
  } from "@coreui/react";
 
 export const withForm = (Component) => {
@@ -7,7 +7,12 @@ export const withForm = (Component) => {
         const { handleSubmit, ...rest } = props;
         return (
             <CForm onSubmit={handleSubmit} className="row r-gap-30 mt-4">
-                <Component {...rest}/>
+                <>
+                    <Component {...rest}/>
+                    <CCol>
+                        <CButton color="blue">Continue</CButton>
+                    </CCol>
+                </>
             </CForm>
         )
     }

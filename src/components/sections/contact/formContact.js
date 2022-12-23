@@ -93,9 +93,6 @@ const FormContact = (props) => {
                <DownIcon />
             </button>
          </CCol>
-         <CCol>
-            <CButton type="submit" color="blue">Continue</CButton>
-         </CCol>
          </>
 
    )

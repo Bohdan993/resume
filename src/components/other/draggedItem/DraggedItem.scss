@@ -4,6 +4,10 @@
   &__item {
     background: #ffffff;
     border-radius: 12px;
+
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
   }
   &__title {
     line-height: 19px;
@@ -18,5 +22,13 @@
   }
   &__delete {
     cursor: pointer;
+  }
+
+  &__arrow {
+    transform: rotate(90deg);
+
+    svg {
+      stroke: #3679FD;
+    }
   }
 }

@@ -15,7 +15,7 @@ export async function dataUrlToFIle(dataUrl) {
 }
 
 export function formatDate(date) {
-  const dateObject = typeof date !== 'string' ? new Date(date) : new Date();
+  const dateObject = date !== '' ? new Date(date) : new Date();
 
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',

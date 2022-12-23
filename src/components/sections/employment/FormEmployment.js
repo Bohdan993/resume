@@ -1,5 +1,5 @@
 import { CFormInput, CCol, CRow } from "@coreui/react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
 
@@ -8,53 +8,68 @@ import { formatDate } from "../../../utils";
 import Textarea from "../../forms/textarea/TextArea";
 import AddButton from "../../forms/addButton/AddButton";
 import DraggedItem from "../../other/draggedItem/DraggedItem";
-import { setEmployment, deleteEmployment } from "../../../slices/employment";
+import { setEmployment, updateEmployment, deleteEmployment, setSelectedEmploymentId } from "../../../slices/employment";
+import { withForm } from "../../../HOC/withForm";
 
 
 const initialState = {
   title: "",
-  period_from: "",
-  period_to: "",
+  period_from: formatDate(new Date()),
+  period_to: formatDate(new Date()),
   city: "",
   company: "",
   description: "",
+  id: uuid()
 };
 
+const ADD_ONE_MORE_EMPLOYMENT = 'Add one more employment';
+const UPDATE_EMPLOYMENT = 'Update employment';
+
 const FormEmployment = () => {
-  const storeEmployments = useSelector((state) => state.employment.employments);
-  const [employments, setEmployments] = useState(storeEmployments);
-  const [selected, setSelected] = useState({ ...initialState, id: uuid() });
+
+  const dispatch = useDispatch();
+  const employments = useSelector((state) => state.employment.employments);
+  const selectedEmploymentId = useSelector((state) => state.employment.selectedEmploymentId);
+  const [localEmployment, setLocalEmployment] = useState({ ...initialState});
+
+  console.log(selectedEmploymentId);
 
   useEffect(() => {
-  }, [employments]);
+    const employment = employments.find(employment => employment.id === selectedEmploymentId);
 
-  const handleEmployment = () => {
-    const employmentIdx = employments.findIndex((el) => el.id === selected.id);
-
-    if (employmentIdx === -1) {
-      setEmployments([...employments, selected]);
-      return;
+    if(employment) {
+      setLocalEmployment(employment);
+    } else {
+      setLocalEmployment({...initialState, id: uuid()});
     }
+  }, [selectedEmploymentId]);
 
-    const clonedEmployments = [...employments];
-    clonedEmployments[employmentIdx] = selected;
-
-    setEmployments(clonedEmployments);
-    setSelected({ ...initialState, id: uuid() })
+  const handleEmploymentAdd = () => {
+    dispatch(setEmployment({...localEmployment, id: uuid()}));
+    setLocalEmployment({...initialState, id: uuid()});
   };
 
-  const handleSelect = (employment) => {
-    setSelected(employment);
+  const handleEmploymentUpdate = () => {
+    dispatch(updateEmployment(localEmployment));
+  }
+
+  const handleSelect = (id) => {
+    if(!selectedEmploymentId || selectedEmploymentId !== id) {
+      dispatch(setSelectedEmploymentId(id));
+    } else {
+      dispatch(setSelectedEmploymentId(null));
+    }
+    
   };
 
-  const handleDelete = (id) => {
-    setEmployments((state) => state.filter((el) => el.id !== id));
+  const handleDelete = (id, e) => {
+    e.stopPropagation();
+    dispatch(deleteEmployment(id));
+    dispatch(setSelectedEmploymentId(null));
   };
 
-  const handleInput = (name) => {
-    return (event) => {
-      setSelected((state) => ({ ...state, [name]: event.target.value }));
-    };
+  const handleInput = (event, name) => {
+    setLocalEmployment((state) => ({ ...state, [name]: event.target.value }));
   };
 
   return (
@@ -66,7 +81,7 @@ const FormEmployment = () => {
               <DraggedItem
                 key={employment.id}
                 title={employment.title}
-                onClick={handleSelect.bind(null, employment)}
+                onClick={handleSelect.bind(null, employment.id)}
                 onDelete={handleDelete.bind(null, employment.id)}
                 skillsList={[
                   `${formatDate(employment.period_from)} - ${formatDate(
@@ -75,6 +90,7 @@ const FormEmployment = () => {
                   employment.company,
                   employment.city,
                 ]}
+                selected={employment.id === selectedEmploymentId}
               />
             ))}
           </div>
@@ -84,8 +100,8 @@ const FormEmployment = () => {
         <CRow className="g-30 r-gap-30">
           <CCol xs={6}>
             <CFormInput
-              value={selected.title}
-              onChange={handleInput('title')}
+              value={localEmployment.title}
+              onChange={(e)=>handleInput(e, 'title')}
               type="text"
               floatingLabel="Job Title"
               placeholder="Job Title"
@@ -93,8 +109,8 @@ const FormEmployment = () => {
           </CCol>
           <CCol xs={6}>
             <CFormInput
-              value={selected.company}
-              onChange={handleInput('company')}
+              value={localEmployment.company}
+              onChange={(e)=> handleInput(e, 'company')}
               type="text"
               floatingLabel="Company / Organization Name"
               placeholder="Company / Organization Name"
@@ -104,8 +120,8 @@ const FormEmployment = () => {
             <CRow>
               <CCol xs={6}>
                 <CFormInput
-                  value={selected.period_from}
-                  onChange={handleInput('period_from')}
+                  value={localEmployment.period_from}
+                  onChange={(e)=> handleInput(e, 'period_from')}
                   type="date"
                   floatingLabel="From"
                   placeholder="From"
@@ -113,8 +129,8 @@ const FormEmployment = () => {
               </CCol>
               <CCol xs={6}>
                 <CFormInput
-                  value={selected.period_to}
-                  onChange={handleInput('period_to')}
+                  value={localEmployment.period_to}
+                  onChange={(e)=> handleInput(e, 'period_to')}
                   type="date"
                   floatingLabel="To"
                   placeholder="To"
@@ -124,8 +140,8 @@ const FormEmployment = () => {
           </CCol>
           <CCol xs={6}>
             <CFormInput
-              value={selected.city}
-              onChange={handleInput('city')}
+              value={localEmployment.city}
+              onChange={(e)=> handleInput(e, 'city')}
               type="text"
               floatingLabel="City"
               placeholder="City"
@@ -133,15 +149,15 @@ const FormEmployment = () => {
           </CCol>
           <CCol xs={12}>
             <Textarea
-              value={selected.description}
-              onChange={handleInput('description')}
+              value={localEmployment.description}
+              onChange={(e)=> handleInput(e, 'description')}
               name="description"
             />
           </CCol>
           <CCol xs={12}>
             <AddButton
-              onClick={handleEmployment}
-              text="Add one more employment"
+              onClick={selectedEmploymentId ? handleEmploymentUpdate : handleEmploymentAdd}
+              text={selectedEmploymentId ? UPDATE_EMPLOYMENT : ADD_ONE_MORE_EMPLOYMENT}
             />
           </CCol>
         </CRow>
@@ -150,4 +166,4 @@ const FormEmployment = () => {
   );
 };
 
-export default FormEmployment;
+export default withForm(FormEmployment);
