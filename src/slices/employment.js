@@ -6,5 +6,5 @@ export {
   reducer
 }
 
-export const { setEmployments, setEmployment, updateEmployment, deleteEmployment, setSelectedEmploymentId } = actions;
+export const { setEmployments, setEmployment, updateEmployment, deleteEmployment } = actions;
 

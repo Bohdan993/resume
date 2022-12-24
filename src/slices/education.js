@@ -6,4 +6,4 @@ export {
   reducer
 }
 
-export const { setEducation, updateEducation, deleteEducation, setSelectedEducationId } = actions;
+export const { setEducations, setEducation, updateEducation, deleteEducation} = actions;

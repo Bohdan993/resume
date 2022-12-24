@@ -7,14 +7,17 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMounted } from "../hooks/useMounted";
 import { makeContact, getContact } from "../thunks/contact";
-import { makeEmployment } from "../thunks/employment";
-
+import { makeEducation, getEducation } from "../thunks/education";
+import { makeEmployment, getEmployment } from "../thunks/employment";
 
 
  const thunks = {
     getContact,
     makeContact,
+    getEmployment,
     makeEmployment,
+    getEducation,
+    makeEducation,
  }
  
 
@@ -23,7 +26,7 @@ export const withForm = (Component) => {
 
         const dispatch = useDispatch();
         const navigate = useNavigate();
-        const { values, valuesExist, ...rest } = props;
+        const { values, valuesExist, className, ...rest } = props;
         const isMounted = useMounted();
         let { pathname } = useLocation();
 
@@ -59,10 +62,10 @@ export const withForm = (Component) => {
             }
         }
         return (
-            <CForm onSubmit={submitHandler} className="row r-gap-30">
+            <CForm onSubmit={submitHandler} className={className}>
                 <>
                     <Component values={values} {...rest}/>
-                    <CCol>
+                    <CCol className="mt-4">
                         <CButton type="submit" color="blue">Continue</CButton>
                     </CCol>
                 </>

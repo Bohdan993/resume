@@ -1,6 +1,6 @@
 import {combineReducers } from '@reduxjs/toolkit';
 import { reducer as appReducer } from '../slices/app';
-import { reducer as activitiesReducer } from '../slices/activities';
+import { reducer as activityReducer } from '../slices/activity';
 import { reducer as certificatiesReducer } from '../slices/certificaties';
 import { reducer as contactReducer } from '../slices/contact';
 import { reducer as courseReducer } from '../slices/course';
@@ -15,7 +15,7 @@ import { reducer as socialsReducer } from '../slices/socials';
 
 const combinedReducer = combineReducers({
   app: appReducer,
-  activities: activitiesReducer,
+  activities: activityReducer,
   certificaties: certificatiesReducer,
   contact: contactReducer,
   course: courseReducer,

@@ -3,8 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const makeSlice = (name) => {
 
     const initialState = {
-        [name + 's'] : [],
-        ['selected' + name.slice(0,1).toUpperCase() + name.slice(1) + 'Id'] : null
+        [name + 's'] : []
     };
 
     const slice = createSlice({
@@ -41,12 +40,6 @@ export const makeSlice = (name) => {
             action
         ){
         state[name + 's'] = state[name + 's'].filter((v) => v.id !== action.payload);
-        },
-        ['setSelected' + name.slice(0,1).toUpperCase() + name.slice(1) + 'Id'](
-            state,
-            action
-        ){
-            state['selected' + name.slice(0,1).toUpperCase() + name.slice(1) + 'Id'] = action.payload;
         }
     }
     });

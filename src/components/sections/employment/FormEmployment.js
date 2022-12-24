@@ -1,118 +1,55 @@
 import { CFormInput, CCol, CRow } from "@coreui/react";
-import { useEffect, useState } from "react";
-import uuid from "react-uuid";
 import { formatDate } from "../../../utils";
-
 import Textarea from "../../forms/textarea/TextArea";
 import AddButton from "../../forms/addButton/AddButton";
 import DraggedItem from "../../other/draggedItem/DraggedItem";
 import { withForm } from "../../../HOC/withForm";
-import { useFormikContext, withFormik } from "formik";
+import { withFormik } from "formik";
+import { withLogic } from "../../../HOC/withLogic";
 
-
-
-
-const initialState = {
-  title: "",
-  period_from: formatDate(new Date()),
-  period_to: formatDate(new Date()),
-  city: "",
-  company: "",
-  description: "",
-  id: uuid()
-};
-
-const ADD_ONE_MORE_EMPLOYMENT = 'Add one more employment';
-const UPDATE_EMPLOYMENT = 'Update employment';
 
 const FormEmployment = (props) => {
-
-  const { setValues } = useFormikContext();
-  const storeEmployments = props.valuesFromStore;
-  const [selectedEmploymentId, setSelectedEmploymentId ]= useState(null);
-  const [localEmployment, setLocalEmployment] = useState({ ...initialState});
-  const [employments, setEmployments] = useState(storeEmployments);
-
-  useEffect(() => {
-    const employment = employments.find(employment => employment.id === selectedEmploymentId);
-
-    if(employment) {
-      setLocalEmployment(employment);
-    } else {
-      setLocalEmployment({...initialState, id: uuid()});
-    }
-  }, [selectedEmploymentId]);
-
-  useEffect(() => {
-    setValues(employments);
-  }, [employments, setValues]);
-
-
-  const handleEmploymentAdd = (e) => {
-    e.preventDefault();
-    setEmployments(prev => {
-      return [...prev, {...localEmployment, id: uuid()}];
-    })
-    setLocalEmployment({...initialState, id: uuid()});
-  };
-
-  const handleEmploymentUpdate = (id, e) => {
-    e.preventDefault();
-    setEmployments(prev => {
-      const index = prev.findIndex(el => el.id === id);
-      const before = prev.slice(0, index);
-      const after = prev.slice(index + 1);
-      return [...before, {...localEmployment}, ...after];
-    })
-  }
-
-  const handleSelect = (id) => {
-    if(!selectedEmploymentId || selectedEmploymentId !== id) {
-      setSelectedEmploymentId(id);
-    } else {
-      setSelectedEmploymentId(null);
-    }
-    
-  };
-
-  const handleDelete = (id, e) => {
-      e.stopPropagation();
-      setEmployments(prev => {
-        return prev.filter(el => el.id !== id);
-      })
-      setSelectedEmploymentId(null);
-  };
-
-  const handleInput = (event, name) => {
-    setLocalEmployment((state) => ({ ...state, [name]: event.target.value }));
-  };
-
+  const {
+    handleInput,
+    handleSelect,
+    handleDelete,
+    handleValueAdd: handleEmploymentAdd,
+    handleValueUpdate: handleEmploymentUpdate,
+    dataValues: employments,
+    localValue: localEmployment,
+    selectedValueId: selectedEmploymentId,
+    addText,
+    updateText
+  } = props;
   return (
     <>
-      <CRow>
-        <CCol>
-          <div className="dragged">
-            {employments.map((employment) => (
-              <DraggedItem
-                key={employment.id}
-                title={employment.title}
-                onClick={handleSelect.bind(null, employment.id)}
-                onDelete={handleDelete.bind(null, employment.id)}
-                skillsList={[
-                  `${formatDate(employment.period_from)} - ${formatDate(
-                    employment.period_to
-                  )}`,
-                  employment.company,
-                  employment.city,
-                ]}
-                selected={employment.id === selectedEmploymentId}
-              />
-            ))}
-          </div>
-        </CCol>
-      </CRow>
-      <div className="row r-gap-30 mt-4">
-        <CRow className="g-30 r-gap-30">
+    {
+      employments.length ? ( 
+        <CRow className="mt-4">
+          <CCol>
+            <div className="dragged">
+              {employments.map((employment) => (
+                <DraggedItem
+                  key={employment.id}
+                  title={employment.title}
+                  onClick={handleSelect.bind(null, employment.id)}
+                  onDelete={handleDelete.bind(null, employment.id)}
+                  skillsList={[
+                    `${formatDate(employment.period_from)} - ${formatDate(
+                      employment.period_to
+                    )}`,
+                    employment.company,
+                    employment.city,
+                  ]}
+                  selected={employment.id === selectedEmploymentId}
+                />
+              ))}
+            </div>
+          </CCol>
+        </CRow>
+        ) : null
+      }
+        <CRow className="g-30 r-gap-30 mt-4">
           <CCol xs={6}>
             <CFormInput
               value={localEmployment.title}
@@ -179,11 +116,10 @@ const FormEmployment = (props) => {
           <CCol xs={12}>
             <AddButton
               onClick={selectedEmploymentId ? handleEmploymentUpdate.bind(null, selectedEmploymentId) : handleEmploymentAdd}
-              text={selectedEmploymentId ? UPDATE_EMPLOYMENT : ADD_ONE_MORE_EMPLOYMENT}
+              text={selectedEmploymentId ? updateText : addText}
             />
           </CCol>
         </CRow>
-      </div>
     </>
   );
 };
@@ -201,4 +137,4 @@ export default withFormik({
 
         return initialValues;
   }
-})(withForm(FormEmployment));
+})(withForm(withLogic(FormEmployment)));
