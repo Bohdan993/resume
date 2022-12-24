@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
-import { formatDate } from "../utils";
 import { useFormikContext} from "formik";
-
-
-
-
-
-const ADD_ONE_MORE_EMPLOYMENT = 'Add one more value';
-const UPDATE_EMPLOYMENT = 'Update value';
-
-
 
 
 export const withLogic = (Component) => {
