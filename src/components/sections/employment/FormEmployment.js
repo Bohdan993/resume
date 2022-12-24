@@ -25,14 +25,12 @@ const initialState = {
 const ADD_ONE_MORE_EMPLOYMENT = 'Add one more employment';
 const UPDATE_EMPLOYMENT = 'Update employment';
 
-const FormEmployment = () => {
+const FormEmployment = (props) => {
 
   const dispatch = useDispatch();
-  const employments = useSelector((state) => state.employment.employments);
+  const employments = props.values;
   const selectedEmploymentId = useSelector((state) => state.employment.selectedEmploymentId);
   const [localEmployment, setLocalEmployment] = useState({ ...initialState});
-
-  console.log(selectedEmploymentId);
 
   useEffect(() => {
     const employment = employments.find(employment => employment.id === selectedEmploymentId);
@@ -76,7 +74,7 @@ const FormEmployment = () => {
     <>
       <CRow>
         <CCol>
-          <div className="gragged">
+          <div className="dragged">
             {employments.map((employment) => (
               <DraggedItem
                 key={employment.id}
@@ -105,6 +103,7 @@ const FormEmployment = () => {
               type="text"
               floatingLabel="Job Title"
               placeholder="Job Title"
+              name="title"
             />
           </CCol>
           <CCol xs={6}>
@@ -114,6 +113,7 @@ const FormEmployment = () => {
               type="text"
               floatingLabel="Company / Organization Name"
               placeholder="Company / Organization Name"
+              name="company"
             />
           </CCol>
           <CCol xs={6}>
@@ -125,6 +125,7 @@ const FormEmployment = () => {
                   type="date"
                   floatingLabel="From"
                   placeholder="From"
+                  name="period_from"
                 />
               </CCol>
               <CCol xs={6}>
@@ -134,6 +135,7 @@ const FormEmployment = () => {
                   type="date"
                   floatingLabel="To"
                   placeholder="To"
+                  name="period_to"
                 />
               </CCol>
             </CRow>
@@ -145,6 +147,7 @@ const FormEmployment = () => {
               type="text"
               floatingLabel="City"
               placeholder="City"
+              name="city"
             />
           </CCol>
           <CCol xs={12}>

@@ -1,24 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { makeSlice } from './makeSlice';
 
+const {actions, reducer} = makeSlice('education');
 
-const initialState = {
-    isLoginLoading: false,
-    auth: {
-        authMethod: null
-    }
-};
+export {
+  reducer
+}
 
-export const slice = createSlice({
-  name: 'app',
-  initialState,
-  reducers: {
-    getLoading(
-      state,
-      action
-    ){
-      state.isLoginLoading = action.payload;
-    },
-  }
-});
-
-export const { reducer } = slice;
+export const { setEducation, updateEducation, deleteEducation, setSelectedEducationId } = actions;

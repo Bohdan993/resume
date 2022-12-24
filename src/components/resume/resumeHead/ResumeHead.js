@@ -3,11 +3,12 @@ import { ReactComponent as ArrowLeftIcon } from '../../../images/icons/arrow-lef
 import { ReactComponent as ArrowRightIcon } from '../../../images/icons/arrow-right.svg'
 import { ReactComponent as ArrowProfileIcon } from '../../../images/icons/arrow-profile.svg'
 import avatar from '../../../images/other/avatar-small.png';
-
 import './resumeHead.scss'
+import { useSelector } from 'react-redux';
 
 
 const ResumeHead = () => {
+   const contact = useSelector((state) => state.contact.contact);
    return (
       <div className="resume-head">
          <div className="resume-head__status">
@@ -25,7 +26,7 @@ const ResumeHead = () => {
          </div>
          <div className="resume-head__profile">
             <div className="resume-head__avatar-img">
-               <img src={avatar} alt="" />
+               <img src={contact?.picture || avatar} alt="" />
             </div>
             <button className="resume-head__profile-arrow">
                <ArrowProfileIcon />

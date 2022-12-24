@@ -3,26 +3,32 @@ import { useState } from "react";
 import {
    CFormInput,
    CCol,
-   CRow,
-   CButton
+   CRow
 } from "@coreui/react";
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
 import { ReactComponent as DownIcon } from '../../../images/icons/down.svg';
-import { withFormik } from 'formik';
+import { withFormik } from "formik";
 import { withForm } from "../../../HOC/withForm";
 
-const noop = () => {}
 
 const FormContact = (props) => {
+   
    const {
       values,
-      // touched,
-      // errors,
       handleChange,
       handleBlur,
+      setFieldValue,
+      valuesFromStore
     } = props;
 
    const [visibleAllInputs, setVisibleAllInputs] = useState(false);
+   const [picture, setPicture] = useState(null);
+
+
+   const handleSelectImage = (event) => {
+      setPicture(event.target.files?.[0]);
+      setFieldValue('picture', event.target.files?.[0]);
+   };
 
 
    const handleChangeVisibility = (e) => {
@@ -38,13 +44,13 @@ const FormContact = (props) => {
       <>
          <CRow>
             <CCol xs={6} className="gap-3">
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['first-name']} className="mb-3" type="text" floatingLabel="First Name" placeholder="First Name" name="first-name"/>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['last-name']} type="text" floatingLabel="Last Name" placeholder="Last Name" name="last-name"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['first_name']} className="mb-3" type="text" floatingLabel="First Name" placeholder="First Name" name="first_name"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['last_name']} type="text" floatingLabel="Last Name" placeholder="Last Name" name="last_name"/>
             </CCol>
             <CCol xs={6}>
                <div className="add-photo">
-                  <img alt="" className="add-photo__image" />
-                  <input onChange={noop} hidden type="file" id='upload' className="add-photo__input" name="image"/>
+                  <img alt="" className="add-photo__image" src={picture ? URL.createObjectURL(picture) : values.picture} style={{display: picture || values.picture ? 'block' : 'none'}}/>
+                  <input onChange={handleSelectImage} hidden type="file" id='upload' className="add-photo__input" name="image"/>
                   <label className="add-photo__label" htmlFor="upload">
                      <PlusIcon />
                      Add Photo
@@ -71,19 +77,19 @@ const FormContact = (props) => {
                <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['address']} type="text" floatingLabel="Adress" placeholder="Adress" name="address"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['zio-code']} type="text" floatingLabel="Zio Code" placeholder="Zio Code" name="zio-code"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['zip_code']} type="text" floatingLabel="Zip Code" placeholder="Zip Code" name="zip_code"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['driver-license']} type="text" floatingLabel="Driver license" placeholder="Driver license" name="driver-license"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['driver_license']} type="text" floatingLabel="Driver license" placeholder="Driver license" name="driver_license"/>
             </CCol>
             <CCol xs={6}>
                <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['nationality']} type="text" floatingLabel="Nationality" placeholder="Nationality" name="nationality"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['place-of-birth']} type="text" floatingLabel="Place of birth" placeholder="Place of birth" name="place-of-birth"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['place_of_birth']} type="text" floatingLabel="Place of birth" placeholder="Place of birth" name="place_of_birth"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['date-of-birth']} type="date" floatingLabel="Date of birth" placeholder="Date of birth" name="date-of-birth"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['date_of_birth']} type="date" floatingLabel="Date of birth" placeholder="Date of birth" name="date_of_birth"/>
             </CCol>
          </CRow>}
 
@@ -99,26 +105,30 @@ const FormContact = (props) => {
 }
 
 export default withFormik({ 
-   mapPropsToValues: () => (
-      { 
-         "first-name": '',
-         "last-name": '',
-         email: '',
-         phone: '',
-         country: '',
-         city: '',
-         address: '',
-         "zio-code": '',
-         "driver-license": '',
-         "nationality": '',
-         "place-of-birth": '',
-         "date-of-birth": ''
-      }
-      ),
-   handleSubmit: (values, { setSubmitting }) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-      }, 1000);
-    },
+   mapPropsToValues: (props) => {
+         const keys = { 
+            "first_name": '',
+            "last_name": '',
+            "email": '',
+            "phone": '',
+            "country": '',
+            "city": '',
+            "address": '',
+            "zip_code": '',
+            "driver_license": '',
+            "nationality": '',
+            "place_of_birth": '',
+            "date_of_birth": '',
+            "picture": ""
+         }
+
+         const initialValues = {};
+
+         for (const [name, _] of Object.entries(keys)) {
+            initialValues[name] = props.valuesFromStore[name] || '';
+          }
+
+
+         return initialValues;
+   }
 })(withForm(FormContact));

@@ -10,6 +10,9 @@ import { ReactComponent as CopyIcon } from '../../../images/icons/copy-link.svg'
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg'
 
 const Textarea = ({ hideButton, prewrite, ...rest }) => {
+   const clickHandler = (e) => {
+      e.preventDefault();
+   }
    return (
       <div className="textarea__item">
          <CFormTextarea 
@@ -18,31 +21,31 @@ const Textarea = ({ hideButton, prewrite, ...rest }) => {
             {...rest}>
          </CFormTextarea>
          {prewrite ?
-            <button className='textarea__prewrite-button'>
+            <button onClick={clickHandler} className='textarea__prewrite-button'>
                Pre-written phrases  <PlusIcon />
             </button> : null}
          {hideButton || <div className="textarea__contols">
-            <button className="textarea__button">
+            <button onClick={clickHandler} className="textarea__button">
                <BoldIcon />
             </button>
-            <button className="textarea__button">
+            <button onClick={clickHandler} className="textarea__button">
                <ItalicIcon />
             </button>
-            <button className="textarea__button">
+            <button onClick={clickHandler} className="textarea__button">
                <UIcon />
             </button>
-            <button className="textarea__button">
+            <button onClick={clickHandler} className="textarea__button">
                <LinkIcon />
             </button>
             <div className="textarea__button-group">
-               <button className="textarea__button">
+               <button onClick={clickHandler} className="textarea__button">
                   <List1Icon />
                </button>
-               <button className="textarea__button">
+               <button onClick={clickHandler} className="textarea__button">
                   <List2Icon />
                </button>
             </div>
-            <button className="textarea__button">
+            <button onClick={clickHandler} className="textarea__button">
                <CopyIcon />
             </button>
          </div>}

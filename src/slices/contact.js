@@ -2,21 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-  // FIXME: api returned no_data every tyme
-  resumeId: 29,
-  first_name: "",
-  last_name: "",
-  picture: null,
-  email: "",
-  phone: "",
-  country: "",
-  nationality: "",
-  city: "",
-  address: "",
-  zip_code: "",
-  driver_license: "",
-  place_of_birth: "",
-  date_of_birth: ""
+  contact : {
+    resumeId: "",
+    first_name: "",
+    last_name: "",
+    picture: "",
+    email: "",
+    phone: "",
+    country: "",
+    nationality: "",
+    city: "",
+    address: "",
+    zip_code: "",
+    driver_license: "",
+    place_of_birth: "",
+    date_of_birth: ""
+  }
 };
 
 export const slice = createSlice({
@@ -27,9 +28,12 @@ export const slice = createSlice({
       state,
       action
     ){
-      state = {...state, ...action.payload};
+      state.contact = {...state.contact, ...action.payload};
     }
   }
 });
+
+
+export const { setContact } = slice.actions;
 
 export const { reducer } = slice;
