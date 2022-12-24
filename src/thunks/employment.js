@@ -1,28 +1,80 @@
 import { makeApiCall } from '../api/makeApiCall';
-import { GET_CV } from '../constants/apiEndpoints';
-import { slice } from '../slices/contact';
-import { headers } from '../constants/common';
+import { ADD_EMPLOYMENT, UPDATE_EMPLOYMENT, GET_EMPLOYMENTS } from '../constants/apiEndpoints';
+import { setEmployments } from '../slices/employment';
+
+
+const makeCreate = (name, apiFunc = Promise.resolve()) => {
+    return (data) => async (dispatch, getState) => {
+        const values = data;
+        const {[name + 's']: storeValues} = getState()[name];
+        const newValues = [];
+    
+        values.forEach((current) => {
+            if (!(storeValues.some((el) => el.id === current.id))) {
+                newValues.push(current);
+            }
+        });
+    
+        // await Promise.all([
+        //     ...newValues.map(value => await makeApiCall('post', apiFunc(), value)),
+        // ]);
+    }
+}
+
+
+const makeUpdate = (name, apiFunc = Promise.resolve()) => {
+    return (data) => async (dispatch, getState) => {
+        const values = data;
+        const {[name + 's']: storeValues} = getState()[name];
+        const newValues = [];
+    
+        values.forEach((current) => {
+            if (!(storeValues.some((el) => el.id === current.id))) {
+                newValues.push(current);
+            }
+        });
+    
+        // await Promise.all([
+        //     ...newValues.map(value => await makeApiCall('post', apiFunc(value.id), value)),
+        // ]);
+    }
+}
+
+
+const createEmployments = makeCreate('employment', ADD_EMPLOYMENT);
+const updateEmployments = makeUpdate('employment', UPDATE_EMPLOYMENT);
 
 
 
-export const createEmployments = () => async (dispatch) => {
-    const result =  await makeApiCall('get', GET_CV());
+// const updateEmployments = (data) => async (dispatch, getState) => {
+//     const employments = data;
+//     const {employments: storeEmployments} = getState().employment;
+//     const updatedEmployments = [];
 
-    // dispatch(slice.actions.setContact(result));
+//     employments.forEach((current, ind) => {
+//         if (storeEmployments.some((el) => el.id === current.id)) {
+//             updatedEmployments.push(current);
+//         }
+//     });
+
+//     // await Promise.all([
+//     //     ...newEmployments.map(employment => await makeApiCall('post', UPDATE_EMPLOYMENT(employment.id), employment)),
+//     // ]);
+
+    
+// };
+
+export const getEmployments = () => async (dispatch) => {
+    const result =  await makeApiCall('get', GET_EMPLOYMENTS());
+
+    dispatch(setEmployments(result));
 };
-
-
-export const updateEmployment = () => async (dispatch) => {
-    const result =  await makeApiCall('get', GET_CV());
-
-    dispatch(slice.actions.setContact(result));
-};
-
 
 export const makeEmployment = (data) => async (dispatch) => {
-    const result =  await makeApiCall('get', GET_CV(), {}, {Authorization: headers.Authorization});
+    await dispatch(createEmployments(data));
+    await dispatch(updateEmployments(data));
 
-    dispatch(slice.actions.setContact(result));
+    dispatch(setEmployments(data));
 };
 
 

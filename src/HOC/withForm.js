@@ -5,8 +5,10 @@ import { useEffect, useCallback } from "react";
 
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMounted } from "../hooks/useMounted";
 import { makeContact, getContact } from "../thunks/contact";
 import { makeEmployment } from "../thunks/employment";
+
 
 
  const thunks = {
@@ -22,6 +24,7 @@ export const withForm = (Component) => {
         const dispatch = useDispatch();
         const navigate = useNavigate();
         const { values, valuesExist, ...rest } = props;
+        const isMounted = useMounted();
         let { pathname } = useLocation();
 
         if(pathname === '/') {
@@ -33,17 +36,17 @@ export const withForm = (Component) => {
         const getData = useCallback(async () => {
             const func = thunks['get' + pathname];
             try {
-                if(func && typeof func === 'function') {
+                if(func && typeof func === 'function' && isMounted()) {
                     await dispatch(func());
                 }
             } catch (err) {
                 console.error('Something went wrong', err);
             }
-        }, [pathname, dispatch]);
+        }, [pathname, dispatch, isMounted]);
 
         useEffect(()=>{
             getData();
-        }, []);
+        }, [getData]);
 
         const submitHandler = async (e) => {
             e.preventDefault();

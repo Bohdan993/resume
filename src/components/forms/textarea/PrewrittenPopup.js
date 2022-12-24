@@ -1,4 +1,4 @@
-import { CFormTextarea } from '@coreui/react'
+import { CFormPrewrittenPopup } from '@coreui/react'
 import './textArea.scss'
 import { ReactComponent as BoldIcon } from '../../../images/icons/bold-text.svg'
 import { ReactComponent as ItalicIcon } from '../../../images/icons/italic-text.svg'
@@ -9,7 +9,7 @@ import { ReactComponent as List2Icon } from '../../../images/icons/list2.svg'
 import { ReactComponent as CopyIcon } from '../../../images/icons/copy-link.svg'
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg'
 
-const Textarea = ({ hideButton, prewrite, ...rest }) => {
+const PrewrittenPopup = ({ hideButton, prewrite, ...rest }) => {
    const clickHandler = (e) => {
       e.preventDefault();
    }
@@ -20,11 +20,11 @@ const Textarea = ({ hideButton, prewrite, ...rest }) => {
 
    return (
       <div className="textarea__item">
-         <CFormTextarea 
-            id="exampleFormControlTextarea1"
+         <CFormPrewrittenPopup 
+            id="exampleFormControlPrewrittenPopup1"
             placeholder='Description of education' 
             {...rest}>
-         </CFormTextarea>
+         </CFormPrewrittenPopup>
          {prewrite ?
             <button onClick={(e) => {clickHandler(e); prewriteButtonHandler();}} className='textarea__prewrite-button'>
                Pre-written phrases  <PlusIcon />
@@ -59,4 +59,4 @@ const Textarea = ({ hideButton, prewrite, ...rest }) => {
 
    )
 }
-export default Textarea;
+export default PrewrittenPopup;

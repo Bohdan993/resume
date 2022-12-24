@@ -8,6 +8,13 @@
     &:not(:last-child) {
       margin-bottom: 30px;
     }
+
+    &.selected {
+      .dragged__drag svg {
+        // fill: #3679FD;
+        stroke: #3679FD;
+      }
+    }
   }
   &__title {
     line-height: 19px;

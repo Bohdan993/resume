@@ -1,15 +1,15 @@
 import { CFormInput, CCol, CRow } from "@coreui/react";
-import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
-
 import { formatDate } from "../../../utils";
 
 import Textarea from "../../forms/textarea/TextArea";
 import AddButton from "../../forms/addButton/AddButton";
 import DraggedItem from "../../other/draggedItem/DraggedItem";
-import { setEmployment, updateEmployment, deleteEmployment, setSelectedEmploymentId } from "../../../slices/employment";
 import { withForm } from "../../../HOC/withForm";
+import { useFormikContext, withFormik } from "formik";
+
+
 
 
 const initialState = {
@@ -27,10 +27,11 @@ const UPDATE_EMPLOYMENT = 'Update employment';
 
 const FormEmployment = (props) => {
 
-  const dispatch = useDispatch();
-  const employments = props.values;
-  const selectedEmploymentId = useSelector((state) => state.employment.selectedEmploymentId);
+  const { setValues } = useFormikContext();
+  const storeEmployments = props.valuesFromStore;
+  const [selectedEmploymentId, setSelectedEmploymentId ]= useState(null);
   const [localEmployment, setLocalEmployment] = useState({ ...initialState});
+  const [employments, setEmployments] = useState(storeEmployments);
 
   useEffect(() => {
     const employment = employments.find(employment => employment.id === selectedEmploymentId);
@@ -42,28 +43,44 @@ const FormEmployment = (props) => {
     }
   }, [selectedEmploymentId]);
 
-  const handleEmploymentAdd = () => {
-    dispatch(setEmployment({...localEmployment, id: uuid()}));
+  useEffect(() => {
+    setValues(employments);
+  }, [employments, setValues]);
+
+
+  const handleEmploymentAdd = (e) => {
+    e.preventDefault();
+    setEmployments(prev => {
+      return [...prev, {...localEmployment, id: uuid()}];
+    })
     setLocalEmployment({...initialState, id: uuid()});
   };
 
-  const handleEmploymentUpdate = () => {
-    dispatch(updateEmployment(localEmployment));
+  const handleEmploymentUpdate = (id, e) => {
+    e.preventDefault();
+    setEmployments(prev => {
+      const index = prev.findIndex(el => el.id === id);
+      const before = prev.slice(0, index);
+      const after = prev.slice(index + 1);
+      return [...before, {...localEmployment}, ...after];
+    })
   }
 
   const handleSelect = (id) => {
     if(!selectedEmploymentId || selectedEmploymentId !== id) {
-      dispatch(setSelectedEmploymentId(id));
+      setSelectedEmploymentId(id);
     } else {
-      dispatch(setSelectedEmploymentId(null));
+      setSelectedEmploymentId(null);
     }
     
   };
 
   const handleDelete = (id, e) => {
-    e.stopPropagation();
-    dispatch(deleteEmployment(id));
-    dispatch(setSelectedEmploymentId(null));
+      e.stopPropagation();
+      setEmployments(prev => {
+        return prev.filter(el => el.id !== id);
+      })
+      setSelectedEmploymentId(null);
   };
 
   const handleInput = (event, name) => {
@@ -155,11 +172,13 @@ const FormEmployment = (props) => {
               value={localEmployment.description}
               onChange={(e)=> handleInput(e, 'description')}
               name="description"
+              prewrite={true}
+              prewriteButtonHandler={()=>alert('lol')}
             />
           </CCol>
           <CCol xs={12}>
             <AddButton
-              onClick={selectedEmploymentId ? handleEmploymentUpdate : handleEmploymentAdd}
+              onClick={selectedEmploymentId ? handleEmploymentUpdate.bind(null, selectedEmploymentId) : handleEmploymentAdd}
               text={selectedEmploymentId ? UPDATE_EMPLOYMENT : ADD_ONE_MORE_EMPLOYMENT}
             />
           </CCol>
@@ -169,4 +188,17 @@ const FormEmployment = (props) => {
   );
 };
 
-export default withForm(FormEmployment);
+export default withFormik({ 
+  mapPropsToValues: () => {
+        const initialValues = { 
+          'title': '',
+          'company': '',
+          'period_from': '',
+          'peiod_to': '',
+          'city': '',
+          'description': ''
+        }
+
+        return initialValues;
+  }
+})(withForm(FormEmployment));

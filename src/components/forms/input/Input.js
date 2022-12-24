@@ -2,6 +2,7 @@ import {
    CFormInput,
 } from "@coreui/react";
 import React, { memo, useState } from 'react'
+import './input.scss';
 
 const Input = ({ handleChange, value, index }) => {
 

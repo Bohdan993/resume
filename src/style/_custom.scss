@@ -55,3 +55,53 @@ input.form-control {
 .btn-skip {
    width: 220px;
 }
+
+
+.form-control {
+   &.is-valid {
+       & + label {
+           color: #6DC26C;
+            width: auto;
+            height: auto;
+            overflow: visible;
+            transform: scale(0.75) translateY(-0.2rem) translateX(0.6rem);
+           &:before {
+               content: '';
+               position: absolute;
+               right: -3px;
+               top: 50%;
+               transform: translateY(-50%);
+               background: url('../images/icons/check-circle.svg') no-repeat center/cover;
+               z-index: 1;
+               width: 10px;
+               height: 10px;
+           }
+       }
+   }
+
+   &.is-invalid {
+      & + label {
+          color: #F73B3B;
+          width: auto;
+          height: auto;
+          overflow: visible;
+          transform: scale(0.75) translateY(-0.2rem) translateX(0.6rem);
+          &:before {
+            content: '';
+            position: absolute;
+            right: -3px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: url('../images/icons/error-circle.svg') no-repeat center/cover;
+            z-index: 1;
+            width: 10px;
+            height: 10px;
+        }
+      }
+  }
+}
+
+.form-control.is-valid, .was-validated .form-control:valid, .form-control.is-invalid, .was-validated .form-control:invalid {
+   background-image: none;
+}
+

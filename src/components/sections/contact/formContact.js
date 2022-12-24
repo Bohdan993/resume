@@ -17,8 +17,7 @@ const FormContact = (props) => {
       values,
       handleChange,
       handleBlur,
-      setFieldValue,
-      valuesFromStore
+      setFieldValue
     } = props;
 
    const [visibleAllInputs, setVisibleAllInputs] = useState(false);
@@ -44,7 +43,7 @@ const FormContact = (props) => {
       <>
          <CRow>
             <CCol xs={6} className="gap-3">
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['first_name']} className="mb-3" type="text" floatingLabel="First Name" placeholder="First Name" name="first_name"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['first_name']} className="mb-3" type="text" floatingLabel="First Name" placeholder="First Name" name="first_name" valid={true}/>
                <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['last_name']} type="text" floatingLabel="Last Name" placeholder="Last Name" name="last_name"/>
             </CCol>
             <CCol xs={6}>
@@ -60,13 +59,13 @@ const FormContact = (props) => {
          </CRow>
          <CRow className="g-30 r-gap-30">
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['email']} type="email" floatingLabel="E-mail*" placeholder="E-mail*" name="email"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['email']} type="email" floatingLabel="E-mail*" placeholder="E-mail*" name="email" invalid={true} />
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['phone']} type="phone" floatingLabel="Phone" placeholder="Phone" name="phone" />
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['phone']} type="phone" floatingLabel="Phone" placeholder="Phone" name="phone" invalid={true} />
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['country']} type="text" floatingLabel="Country" placeholder="Country" name="country"/>
+               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['country']} type="text" floatingLabel="Country" placeholder="Country" name="country" valid={true}/>
             </CCol>
             <CCol xs={6}>
                <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['city']} type="text" floatingLabel="City" placeholder="City" name="city"/>

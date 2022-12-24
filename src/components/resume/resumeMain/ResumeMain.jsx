@@ -22,8 +22,8 @@ const ResumeMain = () => {
             </CCol>
             <CCol className="resume-main__col2">
                <div className="resume-main__head-info">
-                  {`${contact?.address},`} {`${contact?.city},`} {`${contact?.zip_code},`} {contact?.country} <br />
-                  {contact?.phone} {`- ${contact?.email}`}
+                  {contact?.address && (`${contact.address},`)} {contact?.city && (`${contact.city},`)} {contact?.zip_code && (`${contact.zip_code},`)} {contact?.country} <br />
+                  {contact?.phone} {contact?.email && (`- ${contact?.email}`)}
                </div>
                <div className="resume-main__title">
                   {`${contact?.first_name} ${contact?.last_name}`}, Web-designer
