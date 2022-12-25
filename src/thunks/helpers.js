@@ -1,4 +1,6 @@
 import { makeApiCall } from '../api/makeApiCall';
+import { camelToSnakeCase } from '../utils';
+
 
 export const makeCreate = (name, apiFunc = Promise.resolve()) => {
     return (data) => async (dispatch, getState) => {
@@ -32,12 +34,8 @@ export const makeUpdate = (name, apiFunc = Promise.resolve()) => {
             if (storeValues.some((el) => el.id === current.id)) {
                 updateValues.push(current);
             }
-
-            
-
         });
 
-        
         await Promise.all([
             ...updateValues.map(value => makeApiCall('post', apiFunc(value.id), value)),
         ]);
@@ -45,3 +43,31 @@ export const makeUpdate = (name, apiFunc = Promise.resolve()) => {
         console.log(storeValues);
     }
 }
+
+
+export const makeGet = (name, apiFunc = Promise.resolve(), setData) => {
+    return () => async (dispatch, getState) => {
+        const {id} = getState().contact.contact;
+        console.log(getState());
+        const result =  await makeApiCall('get', apiFunc(id));
+    
+        if(result.statusText === 'OK') {
+
+            const finalArr = [];
+    
+            result.data.forEach(el => {
+                const arr = Object.entries(el);
+                const newArr = arr.map(([key, value]) => {
+                    return [camelToSnakeCase(key), value];
+                })
+    
+                const saveArr = Object.fromEntries(newArr);
+    
+                finalArr.push(saveArr);
+            })
+    
+            dispatch(setData(finalArr));
+        }
+    }
+}
+

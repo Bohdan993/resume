@@ -9,7 +9,7 @@ const initialState = {
    title: "",
    period_from: formatDate(new Date()),
    period_to: formatDate(new Date()),
-   city: "",
+   country: "",
    company: "",
    description: "",
    id: uuid()

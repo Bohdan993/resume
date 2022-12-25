@@ -22,7 +22,7 @@ const FormEmployment = (props) => {
     updateText
   } = props;
 
-  
+
   return (
     <>
     {
@@ -41,7 +41,7 @@ const FormEmployment = (props) => {
                     //   employment.period_to
                     // )}`,
                     employment.company,
-                    employment.city,
+                    employment.country,
                   ]}
                   selected={employment.id === selectedEmploymentId}
                 />
@@ -98,12 +98,12 @@ const FormEmployment = (props) => {
           </CCol>
           <CCol xs={6}>
             <CFormInput
-              value={localEmployment.city}
-              onChange={(e)=> handleInput(e, 'city')}
+              value={localEmployment.country}
+              onChange={(e)=> handleInput(e, 'country')}
               type="text"
-              floatingLabel="City"
-              placeholder="City"
-              name="city"
+              floatingLabel="Country"
+              placeholder="Country"
+              name="country"
             />
           </CCol>
           <CCol xs={12}>
@@ -135,7 +135,7 @@ export default withFormik({
           'company': '',
           'period_from': '',
           'peiod_to': '',
-          'city': '',
+          'country': '',
           'description': ''
         }
 
