@@ -21,6 +21,8 @@ const FormEmployment = (props) => {
     addText,
     updateText
   } = props;
+
+  
   return (
     <>
     {
@@ -35,9 +37,9 @@ const FormEmployment = (props) => {
                   onClick={handleSelect.bind(null, employment.id)}
                   onDelete={handleDelete.bind(null, employment.id)}
                   skillsList={[
-                    `${formatDate(employment.period_from)} - ${formatDate(
-                      employment.period_to
-                    )}`,
+                    // `${formatDate(employment.period_from)} - ${formatDate(
+                    //   employment.period_to
+                    // )}`,
                     employment.company,
                     employment.city,
                   ]}
@@ -111,6 +113,8 @@ const FormEmployment = (props) => {
               name="description"
               prewrite={true}
               prewriteButtonHandler={()=>alert('lol')}
+              placeholder={'Description of employment'}
+              id="employmentTextarea"
             />
           </CCol>
           <CCol xs={12}>

@@ -7,7 +7,7 @@ import {
    CButton
 } from "@coreui/react";
 
-import initialSkills from "./initialSkills";
+import initialSkills from "./InitialSkills";
 import ModifyItems from './ModifyItems'
 
 const FormSkill = ({ visibleRating }) => {

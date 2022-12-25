@@ -9,20 +9,13 @@ import { ReactComponent as List2Icon } from '../../../images/icons/list2.svg'
 import { ReactComponent as CopyIcon } from '../../../images/icons/copy-link.svg'
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg'
 
-const Textarea = ({ hideButton, prewrite, ...rest }) => {
+const Textarea = ({ hideButton, prewrite, prewriteButtonHandler, ...rest }) => {
    const clickHandler = (e) => {
       e.preventDefault();
    }
-
-   const {
-      prewriteButtonHandler
-   }  = rest;
-
    return (
       <div className="textarea__item">
          <CFormTextarea 
-            id="exampleFormControlTextarea1"
-            placeholder='Description of education' 
             {...rest}>
          </CFormTextarea>
          {prewrite ?

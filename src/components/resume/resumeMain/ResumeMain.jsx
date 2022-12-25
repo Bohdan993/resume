@@ -45,7 +45,7 @@ const ResumeMain = () => {
                         <div className="resume-main__head-info2 mb-2">
                            <h2 className="resume-main__title2">{el.title}</h2>
                            <p className="resume-main__head-text">
-                           {el.company} {(el.period_from || el.period_to) && `(${formatDate(el.period_from)} - ${formatDate(el.period_to)})`}
+                           {/* {el.company} {(el.period_from || el.period_to) && `(${formatDate(el.period_from)} - ${formatDate(el.period_to)})`} */}
                            </p>
                         </div>
                         <div className="resume-main__bottom">
@@ -73,11 +73,11 @@ const ResumeMain = () => {
                               {el.facility}
                            </div>
                            <div className="resume-main__head-text">
-                              {el.study} {(el.period_from || el.period_to) && `(${formatDate(el.period_from)} - ${formatDate(el.period_to)})`}
+                              {/* {el.study} {(el.period_from || el.period_to) && `(${formatDate(el.period_from)} - ${formatDate(el.period_to)})`} */}
                            </div>
                         </div>
                         <div className="resume-main__bottom">
-                           <p className="resume-main__info-text">                        {el.description}</p>
+                           <p className="resume-main__info-text">{el.description}</p>
                         </div>
                      </Fragment>
                   ))}

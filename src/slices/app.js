@@ -2,23 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    isLoginLoading: false,
-    auth: {
-        authMethod: null
-    }
+    loading: true
 };
 
 export const slice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    getLoading(
+    setLoading(
       state,
       action
     ){
-      state.isLoginLoading = action.payload;
+      state.loading = action.payload;
     },
   }
 });
+
+export const { setLoading } = slice.actions;
 
 export const { reducer } = slice;

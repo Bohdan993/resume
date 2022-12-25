@@ -7,7 +7,7 @@ export function makeApiCall (method, endpoint, data = null, customHeaders) {
     const options = {
       method,
       "url": `${apiPrefix}${endpoint}`,
-      "headers": method === 'post' ? headers : customHeaders ? customHeaders : {}
+      "headers": method === 'post' ? headers : customHeaders ? customHeaders : {Authorization: headers.Authorization}
     }
 
     if(data) {

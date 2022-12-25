@@ -5,7 +5,7 @@ import {
    Routes,
    Route,
 } from "react-router-dom";
-import LoginPage from '../loginPage/LoginPage.js'
+import LoginPage from '../loginPage/LoginPage'
 import Contact from '../sections/contact/Contact';
 import Employment from '../sections/employment/Employment';
 import Education from '../sections/education/Education';
@@ -18,26 +18,42 @@ import Languages from '../sections/languages/Languages';
 import Reference from '../sections/references/Reference';
 import Certificaties from '../sections/certificaties/Certificaties';
 import Socials from '../sections/socials/Socials';
+import { ROUTES } from '../../constants/routes';
+import { getContact } from "../../thunks/contact";
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+
+
+
+
+
+
 
 function App() {
+
+   const dispatch = useDispatch();
+   useEffect(()=>{
+      dispatch(getContact());
+   }, []);
+
    return (
       <BrowserRouter>
          <Routes>
             <Route path="/" element={<AdminPage />} >
                <Route index element={<Contact />} />
-               <Route path='/employment' element={<Employment />} />
-               <Route path='/education' element={<Education />} />
-               <Route path='/skills' element={<Skills />} />
-               <Route path='/activity' element={<Activity />} />
-               <Route path='/hobies' element={<Hobies />} />
-               <Route path='/course' element={<Course />} />
-               <Route path='/intership' element={<InterShip />} />
-               <Route path='/languages' element={<Languages />} />
-               <Route path='/reference' element={<Reference />} />
-               <Route path='/certificaties' element={<Certificaties />} />
-               <Route path='/socials' element={<Socials />} />
+               <Route path={`/${ROUTES['employment']}`} element={<Employment />} />
+               <Route path={`/${ROUTES['education']}`} element={<Education />} />
+               <Route path={`/${ROUTES['skills']}`} element={<Skills />} />
+               <Route path={`/${ROUTES['activity']}`} element={<Activity />} />
+               <Route path={`/${ROUTES['hobies']}`} element={<Hobies />} />
+               <Route path={`/${ROUTES['course']}`} element={<Course />} />
+               <Route path={`/${ROUTES['intership']}`} element={<InterShip />} />
+               <Route path={`/${ROUTES['languages']}`} element={<Languages />} />
+               <Route path={`/${ROUTES['reference']}`} element={<Reference />} />
+               <Route path={`/${ROUTES['certificaties']}`} element={<Certificaties />} />
+               <Route path={`/${ROUTES['socials']}`} element={<Socials />} />
             </Route>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path={`/${ROUTES['login']}`} element={<LoginPage />} />
          </Routes>
       </BrowserRouter>
    );

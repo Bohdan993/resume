@@ -22,3 +22,6 @@ export function formatDate(date) {
     year: 'numeric'
   }).format(dateObject);
 }
+
+
+export const camelToSnakeCase = str => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);

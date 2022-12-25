@@ -2,6 +2,7 @@ import { makeApiCall } from '../api/makeApiCall';
 
 export const makeCreate = (name, apiFunc = Promise.resolve()) => {
     return (data) => async (dispatch, getState) => {
+        const {id} = getState().contact.contact;
         const values = data;
         const {[name + 's']: storeValues} = getState()[name];
         const newValues = [];
@@ -11,10 +12,12 @@ export const makeCreate = (name, apiFunc = Promise.resolve()) => {
                 newValues.push(current);
             }
         });
-    
-        // await Promise.all([
-        //     ...newValues.map(value => await makeApiCall('post', apiFunc(), value)),
-        // ]);
+
+        await Promise.all([
+            ...newValues.map(value => makeApiCall('post', apiFunc(id), value)),
+        ]);
+
+        
     }
 }
 
@@ -23,16 +26,22 @@ export const makeUpdate = (name, apiFunc = Promise.resolve()) => {
     return (data) => async (dispatch, getState) => {
         const values = data;
         const {[name + 's']: storeValues} = getState()[name];
-        const newValues = [];
+        const updateValues = [];
     
         values.forEach((current) => {
-            if (!(storeValues.some((el) => el.id === current.id))) {
-                newValues.push(current);
+            if (storeValues.some((el) => el.id === current.id)) {
+                updateValues.push(current);
             }
+
+            
+
         });
-    
-        // await Promise.all([
-        //     ...newValues.map(value => await makeApiCall('post', apiFunc(value.id), value)),
-        // ]);
+
+        
+        await Promise.all([
+            ...updateValues.map(value => makeApiCall('post', apiFunc(value.id), value)),
+        ]);
+
+        console.log(storeValues);
     }
 }

@@ -34,7 +34,9 @@ export const withLogic = (Component) => {
             setFormikValues(values);
         }, [values, setFormikValues]);
         
-        
+
+        useEffect(()=>{setValues(valuesFromStore); console.log('Setting values...')},[valuesFromStore]);
+
         const handleValueAdd = (e) => {
             e.preventDefault();
             setValues(prev => {

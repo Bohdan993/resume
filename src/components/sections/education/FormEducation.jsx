@@ -1,9 +1,4 @@
-
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import uuid from "react-uuid";
 import { formatDate } from "../../../utils";
-
 import {
    CFormInput,
    CCol,
@@ -14,88 +9,28 @@ import Textarea from "../../forms/textarea/TextArea";
 import AddButton from "../../forms/addButton/AddButton";
 import InputRemove from "../../forms/inputRemove/InputRemove";
 import DraggedItem from "../../other/draggedItem/DraggedItem";
-
 import { withForm } from "../../../HOC/withForm";
-import { useFormikContext, withFormik } from "formik";
+import { withLogic } from "../../../HOC/withLogic";
+import { withFormik } from "formik";
+
 
 import './education.scss'
 
-const initialState = {
-   
-   facility: "",
-   period_from: formatDate(new Date()),
-   period_to: formatDate(new Date()),
-   degree: "",
-   study: "",
-   awards: "",
-   description: "",
-   id: uuid()
- };
-
-const ADD_ONE_MORE_EDUCATION = 'Add one more education';
-const UPDATE_EDUCATION = 'Update education';
 
 const FormEducation = (props) => {
 
-   const { setValues } = useFormikContext();
-   const storeEducations = props.valuesFromStore;
-   const [selectedEducationId, setSelectedEducationId ]= useState(null);
-   const [localEducation, setLocalEducation] = useState({ ...initialState});
-   const [educations, setEducations] = useState(storeEducations);
- 
-   useEffect(() => {
-     const education = educations.find(education => education.id === selectedEducationId);
- 
-     if(education) {
-       setLocalEducation(education);
-     } else {
-       setLocalEducation({...initialState, id: uuid()});
-     }
-   }, [selectedEducationId]);
- 
-   useEffect(() => {
-     setValues(educations);
-   }, [educations, setValues]);
- 
- 
-   const handleEducationAdd = (e) => {
-     e.preventDefault();
-     setEducations(prev => {
-       return [...prev, {...localEducation, id: uuid()}];
-     })
-     setLocalEducation({...initialState, id: uuid()});
-   };
- 
-   const handleEducationUpdate = (id, e) => {
-     e.preventDefault();
-     setEducations(prev => {
-       const index = prev.findIndex(el => el.id === id);
-       const before = prev.slice(0, index);
-       const after = prev.slice(index + 1);
-       return [...before, {...localEducation}, ...after];
-     })
-   }
- 
-   const handleSelect = (id) => {
-     if(!selectedEducationId || selectedEducationId !== id) {
-       setSelectedEducationId(id);
-     } else {
-       setSelectedEducationId(null);
-     }
-     
-   };
- 
-   const handleDelete = (id, e) => {
-       e.stopPropagation();
-       setEducations(prev => {
-         return prev.filter(el => el.id !== id);
-       })
-       setSelectedEducationId(null);
-   };
- 
-   const handleInput = (event, name) => {
-     setLocalEducation((state) => ({ ...state, [name]: event.target.value }));
-   };
+   const {
+      handleInput,
+      handleSelect,
+      handleDelete,
+      handleValueAdd: handleEducationAdd,
+      handleValueUpdate: handleEducationUpdate,
+      dataValues: educations,
+      localValue: localEducation,
+      selectedValueId: selectedEducationId,
+      addText,
+      updateText
+    } = props;
    return (
       <>
          {
@@ -110,9 +45,9 @@ const FormEducation = (props) => {
                         onClick={handleSelect.bind(null, education.id)}
                         onDelete={handleDelete.bind(null, education.id)}
                         skillsList={[
-                           `${formatDate(education.period_from)} - ${formatDate(
-                              education.period_to
-                           )}`,
+                           // `${formatDate(education.period_from)} - ${formatDate(
+                           //    education.period_to
+                           // )}`,
                            education.degree,
                            education.facility,
                         ]}
@@ -191,17 +126,19 @@ const FormEducation = (props) => {
                </CFormSelect>
             </CCol>
             <CCol xs={12}>
-            <Textarea
-               value={localEducation.description}
-               onChange={(e)=> handleInput(e, 'description')}
-               name="assignment"
+               <Textarea
+                  value={localEducation.description}
+                  onChange={(e)=> handleInput(e, 'description')}
+                  name="description"
+                  placeholder={'Description of education'}
+                  id="educationtTextarea"
                />
             </CCol>
             <CCol xs={12}>
-            <AddButton
-            onClick={selectedEducationId ? handleEducationUpdate.bind(null, selectedEducationId) : handleEducationAdd}
-            text={selectedEducationId ? UPDATE_EDUCATION : ADD_ONE_MORE_EDUCATION}
-         />
+               <AddButton
+                  onClick={selectedEducationId ? handleEducationUpdate.bind(null, selectedEducationId) : handleEducationAdd}
+                  text={selectedEducationId ? updateText : addText}
+               />
             </CCol>
          </CRow>
       </>
@@ -222,4 +159,4 @@ export default withFormik({
  
          return initialValues;
    }
- })(withForm(FormEducation));
+ })(withForm(withLogic(FormEducation)));

@@ -15,16 +15,16 @@ import { reducer as socialsReducer } from '../slices/socials';
 
 const combinedReducer = combineReducers({
   app: appReducer,
-  activities: activityReducer,
+  activity: activityReducer,
   certificaties: certificatiesReducer,
   contact: contactReducer,
   course: courseReducer,
   education: educationReducer,
   employment: employmentReducer,
-  hobbies: hobbiesReducer,
+  hobies: hobbiesReducer,
   intership: intershipReducer,
   languages: languagesReducer,
-  references: referencesReducer,
+  reference: referencesReducer,
   skills: skillsReducer,
   socials: socialsReducer
 });

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import HeadMainContent from "../../headMainContent/HeadMainContent";
-import FormSkill from './FormSkill.js'
+import FormSkill from './FormSkill.jsx'
 import './skill.scss'
 
 const Skills = () => {

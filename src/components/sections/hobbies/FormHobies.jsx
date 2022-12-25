@@ -17,7 +17,12 @@ const FormHobies = () => {
       <CForm className="row r-gap-30 mt-4">
          <CRow className="g-30 r-gap-30">
             <CCol xs={12}>
-               <Textarea hideButton={false} prewrite={true} />
+               <Textarea 
+                  hideButton={false} 
+                  prewrite={true} 
+                  placeholder={'Description of hobbie'}
+                  id="hobiesTextarea"
+               />
             </CCol>
          </CRow>
          <CCol className="gap-4 d-flex">

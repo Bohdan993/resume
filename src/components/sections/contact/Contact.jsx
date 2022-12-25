@@ -1,4 +1,4 @@
-import FormContact from "./formContact";
+import FormContact from "./FormContact";
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import './contact.scss'
 import { useEffect, useState } from "react";
@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 const Contact = () => {
 
    const contact = useSelector((state) => state.contact.contact);
+   const loading = useSelector((state) => state.app.loading);
+
    const [valuesExist, setValuesExist] = useState(false);
 
    useEffect(()=>{
@@ -16,8 +18,11 @@ const Contact = () => {
       } else {
          setValuesExist(false);
       }
+   }, [contact]);
 
-   }, [contact])
+   if(loading) {
+      return null
+   }
 
    return (
       <>

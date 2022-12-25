@@ -1,6 +1,7 @@
-import { makeSlice } from './makeSlice';
+import { ROUTES } from '../constants/routes';
+import { makeSlice } from './helpers';
 
-const {actions, reducer} = makeSlice('employment');
+const {actions, reducer} = makeSlice(`${ROUTES['employment']}`);
 
 export {
   reducer

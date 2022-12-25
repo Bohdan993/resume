@@ -127,7 +127,6 @@ export default withFormik({
             initialValues[name] = props.valuesFromStore[name] || '';
           }
 
-
          return initialValues;
    }
 })(withForm(FormContact));
