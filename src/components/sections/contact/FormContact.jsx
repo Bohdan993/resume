@@ -9,7 +9,6 @@ import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
 import { ReactComponent as DownIcon } from '../../../images/icons/down.svg';
 import { withFormik } from "formik";
 import { withForm } from "../../../HOC/withForm";
-import { getBase64 } from "../../../utils";
 
 
 

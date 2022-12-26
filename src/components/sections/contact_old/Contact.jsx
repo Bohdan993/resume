@@ -1,4 +1,4 @@
-import FormContact from "./formContact";
+import FormContact from "./FormContact";
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import './contact.scss'
 

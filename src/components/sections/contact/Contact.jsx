@@ -31,7 +31,12 @@ const Contact = () => {
             description={'This information will be placed at the top of your resume.'}
          >
          </HeadMainContent>
-         <FormContact valuesExist={valuesExist} valuesFromStore={contact} className={`row r-gap-30`}></FormContact>
+         <FormContact 
+            valuesExist={valuesExist} 
+            valuesFromStore={contact} 
+            className={`row r-gap-30`}
+         >
+         </FormContact>
       </>
    )
 }

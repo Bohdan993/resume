@@ -2,23 +2,25 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    isLoginLoading: false,
-    auth: {
-        authMethod: null
-    }
+  hobies : {
+    text: ""
+  }
 };
 
 export const slice = createSlice({
-  name: 'app',
+  name: 'hobies',
   initialState,
   reducers: {
-    getLoading(
+    setHobies(
       state,
       action
     ){
-      state.isLoginLoading = action.payload;
-    },
+      state.hobies = {...state.hobies, ...action.payload};
+    }
   }
 });
+
+
+export const { setHobies } = slice.actions;
 
 export const { reducer } = slice;

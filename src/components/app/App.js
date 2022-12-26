@@ -53,7 +53,7 @@ function App() {
                <Route path={`/${ROUTES['certificaties']}`} element={<Certificaties />} />
                <Route path={`/${ROUTES['socials']}`} element={<Socials />} />
             </Route>
-            <Route path={`/${ROUTES['login']}`} element={<LoginPage />} />
+            <Route path={`/login`} element={<LoginPage />} />
          </Routes>
       </BrowserRouter>
    );

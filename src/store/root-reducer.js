@@ -6,7 +6,7 @@ import { reducer as contactReducer } from '../slices/contact';
 import { reducer as courseReducer } from '../slices/course';
 import { reducer as educationReducer } from '../slices/education';
 import { reducer as employmentReducer } from '../slices/employment';
-import { reducer as hobbiesReducer } from '../slices/hobbies';
+import { reducer as hobbiesReducer } from '../slices/hobies';
 import { reducer as intershipReducer } from '../slices/intership';
 import { reducer as languagesReducer } from '../slices/languages';
 import { reducer as referencesReducer } from '../slices/references';

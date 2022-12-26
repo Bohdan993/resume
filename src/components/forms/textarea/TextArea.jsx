@@ -16,11 +16,13 @@ const Textarea = ({ hideButton, prewrite, prewriteButtonHandler, prewritePopupSh
    const [selectedItems, setSelectedItems] = useState([]);
    const [localValue, setLocalValue] = useState(value);
 
-
-
    useEffect(() => {
       setLocalValue(value);
-   }, [value])
+   }, [value]);
+
+   useEffect(()=>{
+      setLocalValue(selectedItems.map(item=>item.text).join('\n'));
+   }, [selectedItems])
 
    const clickHandler = (e) => {
       e.preventDefault();
@@ -31,9 +33,10 @@ const Textarea = ({ hideButton, prewrite, prewriteButtonHandler, prewritePopupSh
       setSelectedItems(prev => {
          const found = prev.find(el => el.id === id);
          if(!found) {
+
             return [...prev, ...item];
          } else {
-            return [...prev];
+            return prev;
          }
       });
    }
