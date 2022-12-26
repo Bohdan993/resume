@@ -20,7 +20,15 @@ const initialState = {
 
 
 const Education = () => {
+
    const educations = useSelector((state) => state.education.educations);
+   const loading = useSelector((state) => state.app.loading);
+
+   if(loading) {
+      return null
+   }
+
+
    return (
       <>
          <HeadMainContent

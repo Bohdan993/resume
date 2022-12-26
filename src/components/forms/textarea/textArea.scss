@@ -46,5 +46,20 @@ textarea.form-control {
       z-index: 2;
       gap: 8px;
       color: #838799;
+
+      svg {
+         path {
+
+            fill: #3679fd;
+         }
+      }
+
+      &.active {
+         svg {
+            path {
+               fill: #DADCE3;
+            }
+         }
+      }
    }
 }

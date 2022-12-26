@@ -72,15 +72,11 @@ export const withForm = (Component) => {
 
         const submitHandler = async (e) => {
             e.preventDefault();
-
-            if(!values.length) {
-                return;
-            }
-            
             const func = thunks['make' + pathname];
+            
             try {
-                console.log('Values', values);
                 const status = await dispatch(func(values, valuesExist));
+                console.log(status);
                 if (status) {
                     const nextPath = getNextPath(allPathNames, pathname);
                     navigate(nextPath);

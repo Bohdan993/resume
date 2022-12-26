@@ -1,0 +1,14 @@
+.prewritten-popup {
+    position: absolute;
+    right: -5px;
+    top: 0;
+    transform: translateX(100%);
+
+    &__list-item {
+        border: none!important;
+        border-radius: unset;
+        font-size: (14/16) * 1rem;
+        line-height: (21/14);
+        font-weight: 350;
+    }
+}

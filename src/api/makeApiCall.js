@@ -21,10 +21,8 @@ export function makeApiCall (method, endpoint, data = null, customHeaders) {
 
     return new Promise(async (resolve, reject)=>{
       try {
-
           const response = await axios(options);
           return resolve(response);
-    
       } catch (err) {
             console.error('[Api]: ', err);
             reject(new Error('Internal server error'));

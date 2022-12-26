@@ -40,9 +40,9 @@ const FormActivity = (props) => {
                         onClick={handleSelect.bind(null, activity.id)}
                         onDelete={handleDelete.bind(null, activity.id)}
                         skillsList={[
-                           // `${formatDate(activity.period_from)} - ${formatDate(
-                           //    activity.period_to
-                           // )}`,
+                           `${formatDate(activity.period_from)} - ${formatDate(
+                              activity.period_to
+                           )}`,
                            activity.degree,
                            activity.facility,
                         ]}

@@ -45,11 +45,11 @@ const FormEducation = (props) => {
                         onClick={handleSelect.bind(null, education.id)}
                         onDelete={handleDelete.bind(null, education.id)}
                         skillsList={[
-                           // `${formatDate(education.period_from)} - ${formatDate(
-                           //    education.period_to
-                           // )}`,
+                           `${formatDate(education.period_from)} - ${formatDate(
+                              education.period_to
+                           )}`,
                            education.degree,
-                           education.facility,
+                           education.description,
                         ]}
                         selected={education.id === selectedEducationId}
                         />

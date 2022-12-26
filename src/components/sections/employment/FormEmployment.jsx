@@ -1,11 +1,12 @@
 import { CFormInput, CCol, CRow } from "@coreui/react";
-import { formatDate } from "../../../utils";
+import { formatDate, prewriteList as list } from "../../../utils";
 import Textarea from "../../forms/textarea/TextArea";
 import AddButton from "../../forms/addButton/AddButton";
 import DraggedItem from "../../other/draggedItem/DraggedItem";
 import { withForm } from "../../../HOC/withForm";
 import { withFormik } from "formik";
 import { withLogic } from "../../../HOC/withLogic";
+import { useState } from 'react';
 
 
 const FormEmployment = (props) => {
@@ -22,6 +23,7 @@ const FormEmployment = (props) => {
     updateText
   } = props;
 
+  const [show, setShow] = useState(false);
 
   return (
     <>
@@ -37,9 +39,9 @@ const FormEmployment = (props) => {
                   onClick={handleSelect.bind(null, employment.id)}
                   onDelete={handleDelete.bind(null, employment.id)}
                   skillsList={[
-                    // `${formatDate(employment.period_from)} - ${formatDate(
-                    //   employment.period_to
-                    // )}`,
+                    `${formatDate(employment.period_from)} - ${formatDate(
+                      employment.period_to
+                    )}`,
                     employment.company,
                     employment.country,
                   ]}
@@ -54,7 +56,7 @@ const FormEmployment = (props) => {
         <CRow className="g-30 r-gap-30 mt-4">
           <CCol xs={6}>
             <CFormInput
-              value={localEmployment.title}
+              value={localEmployment.title || ''}
               onChange={(e)=>handleInput(e, 'title')}
               type="text"
               floatingLabel="Job Title"
@@ -76,7 +78,7 @@ const FormEmployment = (props) => {
             <CRow>
               <CCol xs={6}>
                 <CFormInput
-                  value={localEmployment.period_from}
+                  value={localEmployment.period_from || ''}
                   onChange={(e)=> handleInput(e, 'period_from')}
                   type="date"
                   floatingLabel="From"
@@ -86,7 +88,7 @@ const FormEmployment = (props) => {
               </CCol>
               <CCol xs={6}>
                 <CFormInput
-                  value={localEmployment.period_to}
+                  value={localEmployment.period_to || ''}
                   onChange={(e)=> handleInput(e, 'period_to')}
                   type="date"
                   floatingLabel="To"
@@ -98,7 +100,7 @@ const FormEmployment = (props) => {
           </CCol>
           <CCol xs={6}>
             <CFormInput
-              value={localEmployment.country}
+              value={localEmployment.country || ''}
               onChange={(e)=> handleInput(e, 'country')}
               type="text"
               floatingLabel="Country"
@@ -108,11 +110,13 @@ const FormEmployment = (props) => {
           </CCol>
           <CCol xs={12}>
             <Textarea
-              value={localEmployment.description}
-              onChange={(e)=> handleInput(e, 'description')}
-              name="description"
+              value={localEmployment.assignment || ''}
+              onChange={(e)=> handleInput(e, 'assignment')}
+              name="assignment"
               prewrite={true}
-              prewriteButtonHandler={()=>alert('lol')}
+              prewritePopupShow={show}
+              prewriteButtonHandler={()=>setShow(prev => !prev)}
+              prewriteItems={list}
               placeholder={'Description of employment'}
               id="employmentTextarea"
             />
@@ -136,7 +140,7 @@ export default withFormik({
           'period_from': '',
           'peiod_to': '',
           'country': '',
-          'description': ''
+          'assignment': ''
         }
 
         return initialValues;

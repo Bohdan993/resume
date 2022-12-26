@@ -11,7 +11,7 @@ const initialState = {
    period_to: formatDate(new Date()),
    country: "",
    company: "",
-   description: "",
+   assignment: "",
    id: uuid()
  };
  

@@ -1,4 +1,4 @@
-import { CFormPrewrittenPopup } from '@coreui/react'
+import { CCard, CCardBody, CListGroup, CListGroupItem } from '@coreui/react'
 import './textArea.scss'
 import { ReactComponent as BoldIcon } from '../../../images/icons/bold-text.svg'
 import { ReactComponent as ItalicIcon } from '../../../images/icons/italic-text.svg'
@@ -8,55 +8,29 @@ import { ReactComponent as List1Icon } from '../../../images/icons/list.svg'
 import { ReactComponent as List2Icon } from '../../../images/icons/list2.svg'
 import { ReactComponent as CopyIcon } from '../../../images/icons/copy-link.svg'
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg'
+import './prewrittenPopup.scss';
 
-const PrewrittenPopup = ({ hideButton, prewrite, ...rest }) => {
-   const clickHandler = (e) => {
-      e.preventDefault();
-   }
-
-   const {
-      prewriteButtonHandler
-   }  = rest;
+const PrewrittenPopup = ({items, handleItemClick}) => {
 
    return (
-      <div className="textarea__item">
-         <CFormPrewrittenPopup 
-            id="exampleFormControlPrewrittenPopup1"
-            placeholder='Description of education' 
-            {...rest}>
-         </CFormPrewrittenPopup>
-         {prewrite ?
-            <button onClick={(e) => {clickHandler(e); prewriteButtonHandler();}} className='textarea__prewrite-button'>
-               Pre-written phrases  <PlusIcon />
-            </button> : null}
-         {hideButton || <div className="textarea__contols">
-            <button onClick={clickHandler} className="textarea__button">
-               <BoldIcon />
-            </button>
-            <button onClick={clickHandler} className="textarea__button">
-               <ItalicIcon />
-            </button>
-            <button onClick={clickHandler} className="textarea__button">
-               <UIcon />
-            </button>
-            <button onClick={clickHandler} className="textarea__button">
-               <LinkIcon />
-            </button>
-            <div className="textarea__button-group">
-               <button onClick={clickHandler} className="textarea__button">
-                  <List1Icon />
-               </button>
-               <button onClick={clickHandler} className="textarea__button">
-                  <List2Icon />
-               </button>
-            </div>
-            <button onClick={clickHandler} className="textarea__button">
-               <CopyIcon />
-            </button>
-         </div>}
-
+      <div className="prewritten-popup">
+         <CCard style={{ width: 380/16 + 'rem' }}>
+            <CCardBody>
+            <CListGroup className='prewritten-popup__list'>
+               {items && items.map(item => {
+                  return (
+                     <CListGroupItem 
+                           className="prewritten-popup__list-item" 
+                           key={item.id}
+                           onClick={handleItemClick.bind(null, item.id)}
+                        >{item.text}
+                     </CListGroupItem>
+                  )
+               })}
+            </CListGroup>
+            </CCardBody>
+         </CCard>
       </div>
-
    )
 }
 export default PrewrittenPopup;

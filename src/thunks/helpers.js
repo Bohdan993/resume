@@ -1,6 +1,7 @@
 import { makeApiCall } from '../api/makeApiCall';
-import { camelToSnakeCase } from '../utils';
+import { camelToSnakeCase, convertDate } from '../utils';
 
+const dateArr = ['periodFrom', 'periodTo', 'dateFrom', 'dateTo'];
 
 export const makeCreate = (name, apiFunc = Promise.resolve()) => {
     return (data) => async (dispatch, getState) => {
@@ -39,8 +40,6 @@ export const makeUpdate = (name, apiFunc = Promise.resolve()) => {
         await Promise.all([
             ...updateValues.map(value => makeApiCall('post', apiFunc(value.id), value)),
         ]);
-
-        console.log(storeValues);
     }
 }
 
@@ -48,25 +47,31 @@ export const makeUpdate = (name, apiFunc = Promise.resolve()) => {
 export const makeGet = (name, apiFunc = Promise.resolve(), setData) => {
     return () => async (dispatch, getState) => {
         const {id} = getState().contact.contact;
-        console.log(getState());
         const result =  await makeApiCall('get', apiFunc(id));
     
         if(result.statusText === 'OK') {
 
             const finalArr = [];
-    
+
             result.data.forEach(el => {
                 const arr = Object.entries(el);
                 const newArr = arr.map(([key, value]) => {
+                    if(dateArr.includes(key)) {
+                        return [camelToSnakeCase(key).replace('date', 'period'), convertDate(value.date)];
+                    }
                     return [camelToSnakeCase(key), value];
-                })
-    
+                });
+
                 const saveArr = Object.fromEntries(newArr);
     
                 finalArr.push(saveArr);
-            })
+            });
+
+            console.log(finalArr);
     
-            dispatch(setData(finalArr));
+            await dispatch(setData(finalArr));
+
+            console.log(getState());
         }
     }
 }
