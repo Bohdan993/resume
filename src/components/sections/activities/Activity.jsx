@@ -17,6 +17,12 @@ const initialState = {
 
 const Activity = () => {
    const activitys = useSelector((state) => state.activity.activitys);
+   const loading = useSelector((state) => state.app.loading);
+
+   if(loading) {
+      return null
+   }
+   
    return (
       <>
          <HeadMainContent

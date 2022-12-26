@@ -111,7 +111,7 @@ const FormEmployment = (props) => {
           <CCol xs={12}>
             <Textarea
               value={localEmployment.assignment || ''}
-              onChange={(e)=> handleInput(e, 'assignment')}
+              onChange={(e) => handleInput(e, 'assignment')}
               name="assignment"
               prewrite={true}
               prewritePopupShow={show}

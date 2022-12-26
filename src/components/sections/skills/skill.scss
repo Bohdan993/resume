@@ -14,5 +14,23 @@
       border: 1px solid #dadce3;
       border-radius: 12px;
       padding: 17px;
+
+      .skills__button {
+         svg {
+            path {
+               fill: rgb(247, 59, 59); 
+            }
+         }
+      }
    }
+
+   &__button {
+      svg {
+         path {
+            fill: #3679fd; 
+         }
+      }
+   }
+
+
 }

@@ -10,6 +10,8 @@ import { makeActivity, getActivity } from "../thunks/activity";
 import { makeContact, getContact } from "../thunks/contact";
 import { makeEducation, getEducation } from "../thunks/education";
 import { makeEmployment, getEmployment } from "../thunks/employment";
+import { makeCourse, getCourse } from "../thunks/course";
+
 
 
  const thunks = {
@@ -18,8 +20,10 @@ import { makeEmployment, getEmployment } from "../thunks/employment";
     makeEmployment,
     getEducation,
     makeEducation,
+    getActivity,
     makeActivity,
-    getActivity
+    getCourse,
+    makeCourse
  }
 
  const allPathNames = Object.values(ROUTES).map(el => el.slice(0, 1).toLocaleUpperCase() + el.slice(1));
@@ -66,8 +70,6 @@ export const withForm = (Component) => {
         useEffect(()=>{
             getData();
         }, [getData]);
-
-
 
 
         const submitHandler = async (e) => {
