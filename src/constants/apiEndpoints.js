@@ -24,3 +24,6 @@ export const UPDATE_COURSE = (id) => `/cv/courses/update/${id}`;
 export const ADD_INTERSHIP = (id) => `/cv/${id}/intership/add`;
 export const GET_INTERSHIP = (id) => `/cv/${id}/intership/get`;
 export const UPDATE_INTERSHIP = (id) => `/cv/intership/update/${id}`;
+export const ADD_HOBIE = (id) => `/cv/${id}/hobbies`;
+export const GET_HOBIE = (id) => `/profile/list/hobbies`;
+

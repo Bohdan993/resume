@@ -7,10 +7,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import { useMounted } from "../hooks/useMounted";
 import { makeActivity, getActivity } from "../thunks/activity";
-import { makeContact, getContact } from "../thunks/contact";
+import { makeContact } from "../thunks/contact";
 import { makeEducation, getEducation } from "../thunks/education";
 import { makeEmployment, getEmployment } from "../thunks/employment";
 import { makeCourse, getCourse } from "../thunks/course";
+import { getHobies, makeHobies } from "../thunks/hobies";
+
 
 
 
@@ -23,7 +25,9 @@ import { makeCourse, getCourse } from "../thunks/course";
     getActivity,
     makeActivity,
     getCourse,
-    makeCourse
+    makeCourse,
+    getHobies,
+    makeHobies
  }
 
  const allPathNames = Object.values(ROUTES).map(el => el.slice(0, 1).toLocaleUpperCase() + el.slice(1));
