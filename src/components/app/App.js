@@ -6,7 +6,7 @@ import {
    Route,
 } from "react-router-dom";
 import LoginPage from '../loginPage/LoginPage'
-import Contact from '../sections/contact/Contact';
+import Contact from '../sections/contact_old/Contact';
 import Employment from '../sections/employment/Employment';
 import Education from '../sections/education/Education';
 import Skills from '../sections/skills/Skills';

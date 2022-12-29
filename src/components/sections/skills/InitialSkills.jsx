@@ -3,40 +3,40 @@ import uuid from "react-uuid";
 
 const initialSkills = [
    {
-      text: 'Communication',
-      rating: 4,
+      name: 'Communication',
+      level: 4,
       selected: false,
       key: uuid()
    }
    , {
-      text: 'Dashboard',
-      rating: 0,
+      name: 'Dashboard',
+      level: 0,
       selected: false,
       key: uuid()
    }
    ,
    {
-      text: 'Responsive Web Design',
-      rating: 0,
+      name: 'Responsive Web Design',
+      level: 0,
       selected: false,
       key: uuid()
 
    },
    {
-      text: 'Prototyping',
-      rating: 0,
+      name: 'Prototyping',
+      level: 0,
       selected: false,
       key: uuid()
    },
    {
-      text: 'User Interface Design',
-      rating: 0,
+      name: 'User Interface Design',
+      level: 0,
       selected: false,
       key: uuid()
    },
    {
-      text: 'PHP',
-      rating: 0,
+      name: 'PHP',
+      level: 0,
       selected: false,
       key: uuid()
 

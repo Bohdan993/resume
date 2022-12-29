@@ -9,7 +9,7 @@ import { reducer as employmentReducer } from '../slices/employment';
 import { reducer as hobbiesReducer } from '../slices/hobies';
 import { reducer as intershipReducer } from '../slices/intership';
 import { reducer as languagesReducer } from '../slices/languages';
-import { reducer as referencesReducer } from '../slices/references';
+import { reducer as referencesReducer } from '../slices/reference';
 import { reducer as skillsReducer } from '../slices/skills';
 import { reducer as socialsReducer } from '../slices/socials';
 
@@ -30,5 +30,6 @@ const combinedReducer = combineReducers({
 });
 
 export const rootReducer = (state, action) => {
+  console.log(state);
   return combinedReducer(state, action);
 };

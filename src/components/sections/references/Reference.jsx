@@ -1,6 +1,13 @@
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import FormReference from "./FormReference";
 
+const initialState = {
+   full_name: "",
+   company: "",
+   phone: "",
+   email: ""
+ };
+
 const Reference = () => {
 
    return (
@@ -9,7 +16,11 @@ const Reference = () => {
             title={'References'}
          >
          </HeadMainContent>
-         <FormReference></FormReference>
+         <FormReference
+            className={`row r-gap-30`}
+            skipButton={true}
+            initialState={initialState}
+         ></FormReference>
       </>
    )
 }

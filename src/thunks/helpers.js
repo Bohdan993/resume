@@ -67,11 +67,8 @@ export const makeGet = (name, apiFunc = Promise.resolve(), setData) => {
                 finalArr.push(saveArr);
             });
 
-            console.log(finalArr);
-    
             await dispatch(setData(finalArr));
 
-            console.log(getState());
         }
     }
 }

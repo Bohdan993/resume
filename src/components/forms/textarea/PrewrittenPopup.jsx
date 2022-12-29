@@ -1,29 +1,29 @@
 import { CCard, CCardBody, CListGroup, CListGroupItem } from '@coreui/react'
 import './textArea.scss'
-import { ReactComponent as BoldIcon } from '../../../images/icons/bold-text.svg'
-import { ReactComponent as ItalicIcon } from '../../../images/icons/italic-text.svg'
-import { ReactComponent as UIcon } from '../../../images/icons/u-text.svg'
-import { ReactComponent as LinkIcon } from '../../../images/icons/link-text.svg'
-import { ReactComponent as List1Icon } from '../../../images/icons/list.svg'
-import { ReactComponent as List2Icon } from '../../../images/icons/list2.svg'
-import { ReactComponent as CopyIcon } from '../../../images/icons/copy-link.svg'
-import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg'
+import { ReactComponent as CheckIcon } from '../../../images/icons/activities.svg'
+import { ReactComponent as BackIcon } from '../../../images/icons/activities-back.svg'
 import './prewrittenPopup.scss';
 
-const PrewrittenPopup = ({items, handleItemClick}) => {
+const PrewrittenPopup = ({items, handleAddItemClick, handleDeleteItemClick}) => {
 
    return (
       <div className="prewritten-popup">
-         <CCard style={{ width: 380/16 + 'rem' }}>
-            <CCardBody>
+         <CCard style={{ width: 380/16 + 'rem', height: 350/16 + 'rem'  }} className="prewritten-popup__card">
+            <CCardBody className="prewritten-popup__card-body">
             <CListGroup className='prewritten-popup__list'>
                {items && items.map(item => {
                   return (
                      <CListGroupItem 
                            className="prewritten-popup__list-item" 
                            key={item.id}
-                           onClick={handleItemClick.bind(null, item.id)}
-                        >{item.text}
+                        >
+                           {item.selected ? (
+                                 <div className="icon icon-custom-size" onClick={handleDeleteItemClick.bind(null, item.id)}><CheckIcon className="check"/></div>
+                              ) : (
+                                 <div className="icon icon-custom-size" onClick={handleAddItemClick.bind(null, item.id)}><BackIcon className="back"/></div>
+                              )
+                           }
+                           <div className="text">{item.text}</div>
                      </CListGroupItem>
                   )
                })}

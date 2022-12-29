@@ -1,20 +1,24 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-   CForm,
    CCol,
    CRow,
-   CButton
 } from "@coreui/react";
-
+import { withFormik, useFormikContext } from "formik";
+import { withForm } from "../../../HOC/withForm";
 import initialSkills from "./InitialSkills";
 import ModifyItems from './ModifyItems'
 
-const FormSkill = ({ visibleRating }) => {
+const selectedItems = initialSkills.filter(({ selected }) => selected === true);
+const notSelectedItems = initialSkills.filter(({ selected }) => selected === false);
 
+const FormSkill = ({ visibleRating, ...rest }) => {
+
+   const { setValues: setFormikValues } = useFormikContext();
    const [skills, setSkils] = useState(initialSkills);
-   const selectedItems = skills.filter(({ selected }) => selected === true);
-   const notSelectedItems = skills.filter(({ selected }) => selected === false);
+   const [localSelectedItems, setSelectedItems] = useState(selectedItems);
+   const [localNotSelectedItems, setNotSelectedItems] = useState(notSelectedItems);
+
 
    const ratingChanged = (newRating, id) => {
       setSkils(prev => prev.map((item) => id === item.key ? { ...item, rating: newRating } : item));
@@ -25,14 +29,23 @@ const FormSkill = ({ visibleRating }) => {
       setSkils(prev => prev.map((item) => id === item.key ? { ...item, selected: !item.selected } : item));
    }
 
+   useEffect(() => {
+      setFormikValues(localSelectedItems);
+      const selectedItems = skills.filter(({ selected }) => selected === true);
+      setSelectedItems(selectedItems);
+      const notSelectedItems = skills.filter(({ selected }) => selected === false);
+      setNotSelectedItems(notSelectedItems);
+  }, [skills, setFormikValues]);
+
+
    return (
-      <CForm className="row r-gap-30 mt-4">
+      <>
          <CRow className="g-30 r-gap-30">
-            {selectedItems.length > 0 ?
+            {localSelectedItems.length > 0 ?
                <CCol className="skills__selected-items d-flex gap-3 flex-wrap" xs={12}>
                   <ModifyItems
                      visibleRating={visibleRating}
-                     arr={selectedItems}
+                     arr={localSelectedItems}
                      ratingChanged={ratingChanged}
                      changeItem={changeItem} />
                </CCol> : null}
@@ -41,17 +54,17 @@ const FormSkill = ({ visibleRating }) => {
                   Suggested skills
                </div>
                <div className="skills__adding-items d-flex gap-3 flex-wrap">
-                  <ModifyItems arr={notSelectedItems} ratingChanged={ratingChanged} changeItem={changeItem} />
+                  <ModifyItems arr={localNotSelectedItems} ratingChanged={ratingChanged} changeItem={changeItem} />
                </div>
             </CCol>
          </CRow>
-
-         <CCol className="gap-4 d-flex">
-            <CButton className="btn-skip" variant="outline" color="secondary">Skip this step</CButton>
-            <CButton color="blue">Continue</CButton>
-         </CCol>
-      </CForm >
+      </>
    )
 }
 
-export default FormSkill;
+export default withFormik({ 
+   mapPropsToValues: (props) => {
+         const initialValues = {};
+         return initialValues;
+   }
+})(withForm(FormSkill));

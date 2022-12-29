@@ -1,14 +1,23 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import FormSkill from './FormSkill.jsx'
 import './skill.scss'
 
+
 const Skills = () => {
    const [visibleRating, setVisibleRating] = useState(true);
+   const skills = useSelector((state) => state.skills.skills);
+   const loading = useSelector((state) => state.app.loading);
 
    const changeSwitch = (value) => {
       setVisibleRating(!value);
    }
+
+   if(loading) {
+      return null
+   }
+
    return (
       <>
          <HeadMainContent
@@ -18,7 +27,14 @@ const Skills = () => {
             changeSwitch={changeSwitch}
          >
          </HeadMainContent>
-         <FormSkill visibleRating={visibleRating}></FormSkill>
+         <FormSkill 
+            visibleRating={visibleRating}
+            className={`row r-gap-30`}
+            skipButton={true}
+            valuesFromStore={skills}
+         >
+
+         </FormSkill>
       </>
    )
 }

@@ -6,13 +6,20 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import { useMounted } from "../hooks/useMounted";
-import { makeActivity, getActivity } from "../thunks/activity";
-import { makeContact } from "../thunks/contact";
-import { makeEducation, getEducation } from "../thunks/education";
-import { makeEmployment, getEmployment } from "../thunks/employment";
-import { makeCourse, getCourse } from "../thunks/course";
-import { getHobies, makeHobies } from "../thunks/hobies";
 
+
+import { getActivity, makeActivity} from "../thunks/activity";
+import { makeContact } from "../thunks/contact";
+import { getEducation, makeEducation} from "../thunks/education";
+import { getEmployment, makeEmployment} from "../thunks/employment";
+import { getCourse, makeCourse} from "../thunks/course";
+import { getHobies, makeHobies } from "../thunks/hobies";
+import { getSkills, makeSkills } from "../thunks/skills";
+import { getLanguages, makeLanguages } from "../thunks/languages";
+import { getReference, makeReference } from "../thunks/reference";
+import { getCertificaties, makeCertificaties } from "../thunks/certificaties";
+import { getIntership, makeIntership } from "../thunks/intership";
+import { getSocials, makeSocials } from "../thunks/socials";
 
 
 
@@ -27,7 +34,19 @@ import { getHobies, makeHobies } from "../thunks/hobies";
     getCourse,
     makeCourse,
     getHobies,
-    makeHobies
+    makeHobies,
+    getSkills, 
+    makeSkills,
+    getLanguages, 
+    makeLanguages,
+    getReference, 
+    makeReference,
+    getCertificaties, 
+    makeCertificaties,
+    getIntership,
+    makeIntership,
+    getSocials,
+    makeSocials
  }
 
  const allPathNames = Object.values(ROUTES).map(el => el.slice(0, 1).toLocaleUpperCase() + el.slice(1));
@@ -82,7 +101,6 @@ export const withForm = (Component) => {
             
             try {
                 const status = await dispatch(func(values, valuesExist));
-                console.log(status);
                 if (status) {
                     const nextPath = getNextPath(allPathNames, pathname);
                     navigate(nextPath);

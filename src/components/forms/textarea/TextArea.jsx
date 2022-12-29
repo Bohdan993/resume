@@ -7,77 +7,51 @@ import { ReactComponent as LinkIcon } from '../../../images/icons/link-text.svg'
 import { ReactComponent as List1Icon } from '../../../images/icons/list.svg'
 import { ReactComponent as List2Icon } from '../../../images/icons/list2.svg'
 import { ReactComponent as CopyIcon } from '../../../images/icons/copy-link.svg'
-import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg'
-import PrewrittenPopup from './PrewrittenPopup';
+
 import { useState, useEffect } from 'react';
+import PrewrittenTextarea from './PrewrittenTextarea';
 
-const Textarea = ({ hideButton, prewrite, prewriteButtonHandler, prewritePopupShow, prewriteItems, value, onChange,  ...rest }) => {
-   console.log(value)
-   const [selectedItems, setSelectedItems] = useState([]);
-   const [localValue, setLocalValue] = useState(value);
+const Textarea = ({ 
+   hideButton, 
+   prewrite, 
+   prewriteButtonHandler, 
+   prewritePopupShow, 
+   prewriteItems, 
+   value, 
+   onChange, 
+   // selectedPrewriteItems, 
+   // setSelectedPrewriteItems, 
+   currentValueId,
+   ...rest }) => {
 
-   useEffect(() => {
-      setLocalValue(value);
-   }, [value]);
 
-   useEffect(()=>{
-      setLocalValue(selectedItems.map(item=>item.text).join('\n'));
-   }, [selectedItems])
+
 
    const clickHandler = (e) => {
       e.preventDefault();
    }
 
-   const handleItemClick = (id, e) => {
-      const item = prewriteItems.filter(item => item.id === id);
-      setSelectedItems(prev => {
-         const found = prev.find(el => el.id === id);
-         if(!found) {
-
-            return [...prev, ...item];
-         } else {
-            return prev;
-         }
-      });
-   }
-
-   const handleChange = (e) => {
-      onChange?.(e);
-      setLocalValue(e.target.value);
-   }
-
    return (
       <div className="textarea__item">
-         {prewrite ? 
-            (         
-               <CFormTextarea
-                  value={localValue}
-                  onChange={handleChange}
-                  {...rest}
-               >
-               </CFormTextarea>
-            ) 
-            : 
-            (
-               <CFormTextarea
-                  value={value}
-                  onChange={onChange}
-                  {...rest}
-               >
-               </CFormTextarea>
-            )
-         }
-
-         {prewrite ?
-            (  <>
-               <button onClick={(e) => {clickHandler(e); prewriteButtonHandler?.();}} className={`textarea__prewrite-button ${prewritePopupShow ? 'active' : ''}`}>
-                  Pre-written phrases  <PlusIcon />
-               </button>
-               {prewritePopupShow && <PrewrittenPopup items={prewriteItems} handleItemClick={handleItemClick}/>}
-               </>
-            ) 
-            : 
-               null
+         {prewrite ? (
+            <PrewrittenTextarea
+            prewriteButtonHandler={prewriteButtonHandler}
+            prewritePopupShow={prewritePopupShow}
+            prewriteItems={prewriteItems}
+            value={value}
+            onChange={onChange}
+            // selectedPrewriteItems={selectedPrewriteItems}
+            // setSelectedPrewriteItems={setSelectedPrewriteItems}
+            currentValueId={currentValueId}
+            {...rest}
+            />
+            ) : (         
+            <CFormTextarea
+               value={value}
+               onChange={onChange}
+               {...rest}
+            >
+            </CFormTextarea>)
          }
          {hideButton || <div className="textarea__contols">
             <button onClick={clickHandler} className="textarea__button">

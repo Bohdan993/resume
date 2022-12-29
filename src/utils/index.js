@@ -41,9 +41,11 @@ export function convertDate(date) {
 
 
 export const prewriteList = [
-  {id: '1', text: 'Worked to ensure a positive and hassle-free customer experience.'},
-  {id: '2', text: 'Settled any customer disputes in a professional and pleasant manner.'},
-  {id: '3', text: 'Identified and maximized sales opportunities, and increased customer retention rates.'},
-  {id: '4', text: 'Helped to increase customer return rates by providing excellent customer service at all times.'},
-  {id: '5', text: 'Maintained up-to-date knowledge of all retail promotions.'}
+  {id: '1', text: 'Worked to ensure a positive and hassle-free customer experience.\n', selected: false},
+  {id: '2', text: 'Settled any customer disputes in a professional and pleasant manner.\n', selected: false},
+  {id: '3', text: 'Identified and maximized sales opportunities, and increased customer retention rates.\n', selected: false},
+  {id: '4', text: 'Helped to increase customer return rates by providing excellent customer service at all times.\n', selected: false},
+  {id: '5', text: 'Maintained up-to-date knowledge of all retail promotions 1111.\n', selected: false},
+  {id: '6', text: 'Maintained up-to-date knowledge of all retail promotions 2222.\n', selected: false},
+  {id: '7', text: 'Maintained up-to-date knowledge of all retail promotions 3333.\n', selected: false}
 ];

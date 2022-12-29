@@ -5,11 +5,47 @@
     transform: translateX(100%);
     z-index: 2;
 
-    &__list-item {
+    &__card {
+        overflow: auto;
+    }
+
+    &__list-item.list-group-item {
         border: none!important;
         border-radius: unset;
         font-size: (14/16) * 1rem;
         line-height: (21/14);
         font-weight: 350;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .back {
+            fill: #3679fd;
+        }
+
+        .check {
+            fill: #6DC26C;
+        }
+
+        .icon {
+            width: 2rem;
+            height: 2rem;
+            min-width: 2rem;
+            min-height: 2rem;
+            background-color: #F6F8FA;
+            border-radius: 8px;
+            margin-right: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &__card-body.card-body {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        padding-right: 0.5rem;
+        padding-left: 0;
     }
 }

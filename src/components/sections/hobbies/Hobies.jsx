@@ -1,22 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import FormHobies from "./FormHobies";
 
+const initialState = {
+   text: "",
+ };
+
+
 const Hobies = () => {
 
-   const hobies = useSelector((state) => state.hobies.hobies);
+   const hobies = useSelector((state) => state.hobies.hobiess);
    const loading = useSelector((state) => state.app.loading);
-
-   const [valuesExist, setValuesExist] = useState(false);
-
-   // useEffect(()=>{
-   //    if(Object.values(hobies).some(el => el !== '')) {
-   //       setValuesExist(true);
-   //    } else {
-   //       setValuesExist(false);
-   //    }
-   // }, [hobies]);
 
    if(loading) {
       return null
@@ -30,10 +25,10 @@ const Hobies = () => {
          >
          </HeadMainContent>
          <FormHobies
-            valuesExist={valuesExist} 
             valuesFromStore={hobies} 
             className={`row r-gap-30`}
             skipButton={true}
+            initialState={initialState}
          >
          </FormHobies>
       </>

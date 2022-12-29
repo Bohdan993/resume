@@ -22,7 +22,6 @@ export const withLogic = (Component) => {
 
         useEffect(() => {
             const value = values.find(value => value.id === selectedValueId);
-        
             if(value) {
               setLocalValue(value);
             } else {
@@ -35,14 +34,18 @@ export const withLogic = (Component) => {
         }, [values, setFormikValues]);
         
 
-        useEffect(()=>{setValues(valuesFromStore);},[valuesFromStore]);
+        useEffect(()=>{
+            setValues(valuesFromStore)
+        },[valuesFromStore]);
 
         const handleValueAdd = (e) => {
             e.preventDefault();
             setValues(prev => {
                 return [...prev, {...localValue, id: uuid()}];
             })
-            setLocalValue({...initialState, id: uuid()});
+            let id = uuid();
+            setLocalValue({...initialState, id});
+            setSelectedValueId(id);
         };
     
         const handleValueUpdate = (id, e) => {
@@ -52,7 +55,8 @@ export const withLogic = (Component) => {
                 const before = prev.slice(0, index);
                 const after = prev.slice(index + 1);
                 return [...before, {...localValue}, ...after];
-            })
+            });
+            setSelectedValueId(null);
         }
         
         const handleSelect = (id) => {
@@ -66,13 +70,17 @@ export const withLogic = (Component) => {
         const handleDelete = (id, e) => {
             e.stopPropagation();
             setValues(prev => {
-            return prev.filter(el => el.id !== id);
+                return prev.filter(el => el.id !== id);
             })
             setSelectedValueId(null);
         };
         
-        const handleInput = (event, name) => {
-            setLocalValue((state) => ({ ...state, [name]: event.target.value }));
+        const handleInput = (event, name, text) => {
+            if(event) {
+                setLocalValue((state) => ({ ...state, [name]: event.target.value }));
+            } else {
+                setLocalValue((state) => ({ ...state, [name]: text }));
+            }
         };
 
           return (

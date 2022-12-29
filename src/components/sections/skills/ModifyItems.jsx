@@ -8,10 +8,10 @@ const ModifyItems = ({ arr, changeItem, ratingChanged, visibleRating }) => {
          const stars = <ReactStars
             onChange={(e) => ratingChanged(e, skill.key)}
             count={5}
-            value={skill.rating}
+            value={skill.level}
             size={14}
             activeColor={'#ffd700'} />;
-         return <SkillItem key={skill.key} id={skill.key} visibleRating={visibleRating} rating={stars} selected={skill.selected} text={skill.text} onChange={changeItem} ></SkillItem>
+         return <SkillItem key={skill.key} id={skill.key} visibleRating={visibleRating} rating={stars} selected={skill.selected} text={skill.name} onChange={changeItem} ></SkillItem>
       })
    )
 }

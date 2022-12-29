@@ -6,7 +6,7 @@ import DraggedItem from "../../other/draggedItem/DraggedItem";
 import { withForm } from "../../../HOC/withForm";
 import { withFormik } from "formik";
 import { withLogic } from "../../../HOC/withLogic";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const FormEmployment = (props) => {
@@ -24,6 +24,15 @@ const FormEmployment = (props) => {
   } = props;
 
   const [show, setShow] = useState(false);
+
+  useEffect(()=>{
+    setShow(false); 
+  }, [selectedEmploymentId]);
+
+
+  const handleFocus = (e) => {
+    setShow(false);
+  }
 
   return (
     <>
@@ -111,7 +120,8 @@ const FormEmployment = (props) => {
           <CCol xs={12}>
             <Textarea
               value={localEmployment.assignment || ''}
-              onChange={(e) => handleInput(e, 'assignment')}
+              onChange={(_, text) => handleInput(null, 'assignment', text)}
+              onFocus={handleFocus}
               name="assignment"
               prewrite={true}
               prewritePopupShow={show}
@@ -119,6 +129,7 @@ const FormEmployment = (props) => {
               prewriteItems={list}
               placeholder={'Description of employment'}
               id="employmentTextarea"
+              currentValueId={selectedEmploymentId}
             />
           </CCol>
           <CCol xs={12}>

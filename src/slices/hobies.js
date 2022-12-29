@@ -1,26 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { ROUTES } from '../constants/routes';
+import { makeSlice } from './helpers';
 
+const {actions, reducer} = makeSlice(`${ROUTES['hobies']}`);
 
-const initialState = {
-  hobies : {
-    text: ""
-  }
-};
+export {
+  reducer
+}
 
-export const slice = createSlice({
-  name: 'hobies',
-  initialState,
-  reducers: {
-    setHobies(
-      state,
-      action
-    ){
-      state.hobies = {...state.hobies, ...action.payload};
-    }
-  }
-});
-
-
-export const { setHobies } = slice.actions;
-
-export const { reducer } = slice;
+export const { setHobiess, setHobies, updateHobies, deleteHobies} = actions;
