@@ -9,9 +9,9 @@ const updateActivitys = makeUpdate(`${ROUTES['activity']}`, UPDATE_ACTIVITY);
 
 export const getActivity = makeGet(`${ROUTES['activity']}`, GET_ACTIVITY, setActivitys);
 
-export const makeActivity = (data) => async (dispatch) => {
-    await dispatch(createActivitys(data));
-    await dispatch(updateActivitys(data));
+export const makeActivity = (data, __, formattedData) => async (dispatch) => {
+    await dispatch(createActivitys(formattedData));
+    await dispatch(updateActivitys(formattedData));
 
     dispatch(setActivitys(data));
     return true;

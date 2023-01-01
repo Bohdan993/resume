@@ -9,9 +9,9 @@ import uuid from 'react-uuid';
 import { withFormik, useFormikContext } from "formik";
 import { withForm } from "../../../HOC/withForm";
 
-const FormCertificaties = () => {
+const FormCertificaties = ({valuesFromStore, initialState}) => {
 
-   const [inputs, setInputs] = useState([{ name: "", key: uuid() }]);
+   const [inputs, setInputs] = useState(valuesFromStore.length > 0 ? valuesFromStore : initialState);
    const { setValues: setFormikValues} = useFormikContext();
 
    useEffect(() => {
@@ -25,13 +25,13 @@ const FormCertificaties = () => {
          return { ...input, name: event.target.value };
       });
       if (index === inputs.length - 1) {
-         newInputs = newInputs.concat([{ name: "", key: uuid() }]);
+         newInputs = newInputs.concat([{ name: "", id: uuid() }]);
       }
       setInputs(newInputs);
    };
    const items = inputs.map((item, index) => {
       return (
-         <CCol key={item.key} xs={6} >
+         <CCol key={item.id } xs={6} >
             <CFormInput 
             type="text" 
             value={item.name} 

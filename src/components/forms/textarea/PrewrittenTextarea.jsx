@@ -19,6 +19,8 @@ const PrewrittenTextarea = ({
    const [localValue, setLocalValue] = useState(value);
 
 
+
+
    useEffect(() => {
       setLocalValue(value);
    }, []);
@@ -38,10 +40,13 @@ const PrewrittenTextarea = ({
    }, [item]);
 
    useEffect(()=>{
-      setLocalValue('');
+      
+      if(!currentValueId) {
+         setLocalValue('');
+      }
       setLocalPrewriteItems(prev => {
          return prev.map(el => ({...el, selected: false}));
-      }) 
+      });
    }, [currentValueId]);
 
    useEffect(()=>{
@@ -100,11 +105,14 @@ const PrewrittenTextarea = ({
         <button onClick={(e) => {clickHandler(e); prewriteButtonHandler?.();}} className={`textarea__prewrite-button ${prewritePopupShow ? 'active' : ''}`}>
             Pre-written phrases  <PlusIcon />
         </button>
-        {prewritePopupShow && <PrewrittenPopup 
-        items={localPrewriteItems} 
-        handleAddItemClick={handleAddItemClick}
-        handleDeleteItemClick={handleDeleteItemClick}
-        />}
+        {prewritePopupShow && (
+            <PrewrittenPopup 
+               items={localPrewriteItems} 
+               handleAddItemClick={handleAddItemClick}
+               handleDeleteItemClick={handleDeleteItemClick}
+            />
+         )
+        }
 
     </>
 

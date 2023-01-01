@@ -2,15 +2,14 @@ import FormEducation from "./FormEducation";
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import { useSelector } from "react-redux";
 import uuid from "react-uuid";
-import { formatDate } from "../../../utils";
 import './education.scss';
 
 
 
 const initialState = {
    facility: "",
-   period_from: formatDate(new Date()),
-   period_to: formatDate(new Date()),
+   period_from: null,
+   period_to: null,
    degree: "",
    study: "",
    awards: "",
@@ -41,7 +40,8 @@ const Education = () => {
             className={`row`} 
             initialState={initialState}
             addText="Add one more education"
-            updateText="Update education"
+            updateText="Add one more education"
+            buttonClassName="mt-4"
          >
          </FormEducation>
       </>

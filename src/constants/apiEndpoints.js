@@ -1,4 +1,4 @@
-export const GET_COUNTRIEN = () => `/profile/list/countrys`;
+export const GET_COUNTRIES = () => `/profile/list/countrys`;
 export const GET_CITY_BY_COUNTRY = (country) => `/profile/list/${country}/citys`;
 export const GET_CV = () => `/api/user/resume_list`;
 export const ADD_NEW_CV = () => `/cv/add`;
@@ -21,9 +21,9 @@ export const UPDATE_ACTIVITY = (id) => `/cv/extra_curricular/update/${id}`;
 export const ADD_COURSE = (id) => `/cv/${id}/courses/add`;
 export const GET_COURSE = (id) => `/cv/${id}/courses/get`;
 export const UPDATE_COURSE = (id) => `/cv/courses/update/${id}`;
-export const ADD_INTERSHIP = (id) => `/cv/${id}/intership/add`;
-export const GET_INTERSHIP = (id) => `/cv/${id}/intership/get`;
-export const UPDATE_INTERSHIP = (id) => `/cv/intership/update/${id}`;
+export const ADD_INTERSHIP = (id) => `/cv/${id}/internship/add`;
+export const GET_INTERSHIP = (id) => `/cv/${id}/internship/get`;
+export const UPDATE_INTERSHIP = (id) => `/cv/internship/update/${id}`;
 export const ADD_HOBIE = (id) => `/cv/${id}/hobbies`;
 export const GET_HOBIE = (id) => `/cv/${id}/hobbies/get`;
 export const ADD_SOCIALS = (id) => `/cv/${id}/links/add`;

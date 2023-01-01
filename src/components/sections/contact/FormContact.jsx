@@ -1,29 +1,32 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
    CFormInput,
    CCol,
-   CRow
+   CRow,
+   CFormSelect
 } from "@coreui/react";
 import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg';
 import { ReactComponent as DownIcon } from '../../../images/icons/down.svg';
 import { withFormik } from "formik";
 import { withForm } from "../../../HOC/withForm";
+import { DatePicker } from "../../forms/datePicker/DatePicker";
 
 
 
 
 const FormContact = (props) => {
-   
    const {
       values,
       handleChange,
       handleBlur,
-      setFieldValue
+      setFieldValue,
+      countries
     } = props;
 
    const [visibleAllInputs, setVisibleAllInputs] = useState(false);
    const [picture, setPicture] = useState(null);
+   const [date, setDate] = useState(values['date_of_birth'] || null);
 
 
    const handleSelectImage = (event) => {
@@ -36,6 +39,10 @@ const FormContact = (props) => {
       e.preventDefault();
       setVisibleAllInputs(prev => !prev);
    }
+
+   useEffect(() => {
+      setFieldValue('date_of_birth', date);
+  }, [date, setFieldValue]);
 
 
    const classButton = visibleAllInputs ? 'active show-hidden' : 'show-hidden';
@@ -67,7 +74,23 @@ const FormContact = (props) => {
                <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['phone']} type="phone" floatingLabel="Phone" placeholder="Phone" name="phone" invalid={true} />
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['country']} type="text" floatingLabel="Country" placeholder="Country" name="country" valid={true}/>
+               <CFormSelect 
+                  className="custom-select" 
+                  onChange={handleChange} 
+                  onBlur={handleBlur} 
+                  value={values['country']} 
+                  floatingLabel="Country" 
+                  placeholder="Country" 
+                  valid={true}
+                  name="country"
+               >
+                  <option disabled>Country</option>
+                  {countries && countries.map(el => {
+                     return (
+                        <option key={el?.id} value={el?.name}>{el?.name}</option>
+                     );
+                  })}
+               </CFormSelect>
             </CCol>
             <CCol xs={6}>
                <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['city']} type="text" floatingLabel="City" placeholder="City" name="city"/>
@@ -90,7 +113,28 @@ const FormContact = (props) => {
                <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['place_of_birth']} type="text" floatingLabel="Place of birth" placeholder="Place of birth" name="place_of_birth"/>
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={handleChange} onBlur={handleBlur} value={values['date_of_birth']} type="date" floatingLabel="Date of birth" placeholder="Date of birth" name="date_of_birth"/>
+               {/* <CFormInput 
+               onChange={handleChange}
+                onBlur={handleBlur} 
+                value={values['date_of_birth']} 
+                type="date" 
+                floatingLabel="Date of birth" 
+                placeholder="Date of birth" 
+                name="date_of_birth"
+                /> */}
+               <DatePicker
+                  selected={date ? new Date(date) : date}
+                  onChange={(date) => setDate(date.toString())}
+                  onBlur={handleBlur} 
+                  placeholderText="Date of birth"
+                  name="date_of_birth"
+                  calendarClassName="custom-datepicker"
+                  wrapperClassName="custom-datepicker-wrapper-2"
+                  dateFormat="MMM, yyyy"
+                  showMonthYearPicker
+                  showPopperArrow={false}
+                  useShortMonthInDropdown={true}
+               />
             </CCol>
          </CRow>}
 
@@ -120,11 +164,10 @@ export default withFormik({
             "nationality": '',
             "place_of_birth": '',
             "date_of_birth": '',
-            "picture": ""
+            "picture": ''
          }
 
          const initialValues = {};
-
          for (const [name, _] of Object.entries(keys)) {
             initialValues[name] = props.valuesFromStore[name] || '';
           }

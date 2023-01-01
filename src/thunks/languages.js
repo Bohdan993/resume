@@ -11,7 +11,6 @@ const updateLanguagess = makeUpdate(`${ROUTES['languages']}`, UPDATE_LANGUAGES);
 export const getLanguages = makeGet(`${ROUTES['languages']}`, GET_LANGUAGES, setLanguagess);
 
 export const makeLanguages = (data) => async (dispatch, getState) => {
-    console.log(getState());
     await dispatch(createLanguagess(data));
     await dispatch(updateLanguagess(data));
 

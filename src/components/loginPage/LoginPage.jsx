@@ -12,8 +12,12 @@ import {
 } from "@coreui/react";
 import { ReactComponent as ArrowBackIcon } from '../../images/icons/arrow-back.svg'
 import './loginPage.scss'
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../slices/app";
+import { getAppData } from "../../thunks/app";
 
 const LoginPage = () => {
+   const dispatch = useDispatch();
    let navigate = useNavigate();
    const [password, setPassword] = useState('');
    const [repeatPassword, setRepeatPassword] = useState('');
@@ -51,10 +55,23 @@ const LoginPage = () => {
       axios.post('http://resume.waytrel.pro/api/login_check',
          dataForToken,
          { headers: { 'Content-Type': 'application/json' }, }
-      ).then(res => {
-            localStorage.setItem('token', res.data.token);
-             navigate('/employment');
-         })
+      )
+      .then(res => {
+         localStorage.setItem('token', res.data.token);
+      })
+      .then(res=> {
+         alert('then');
+         async function fetchData(){
+            try {
+               await dispatch(getAppData());
+               navigate('/employment');
+            } catch(err) {
+               console.error('Something went wrong', err);
+               dispatch(setLoading(false));
+            }
+         }
+         fetchData();
+      })
          .catch((error) => console.log(error))
    }
    return (

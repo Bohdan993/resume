@@ -11,7 +11,6 @@ const updateCertificatiess = makeUpdate(`${ROUTES['certificaties']}`, UPDATE_CER
 export const getCertificaties = makeGet(`${ROUTES['certificaties']}`, GET_CERTIFICATIES, setCertificatiess);
 
 export const makeCertificaties = (data) => async (dispatch, getState) => {
-    console.log(getState());
     await dispatch(createCertificatiess(data));
     await dispatch(updateCertificatiess(data));
 

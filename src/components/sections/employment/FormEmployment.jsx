@@ -1,4 +1,4 @@
-import { CFormInput, CCol, CRow } from "@coreui/react";
+import { CFormInput, CCol, CRow, CFormSelect } from "@coreui/react";
 import { formatDate, prewriteList as list } from "../../../utils";
 import Textarea from "../../forms/textarea/TextArea";
 import AddButton from "../../forms/addButton/AddButton";
@@ -7,6 +7,8 @@ import { withForm } from "../../../HOC/withForm";
 import { withFormik } from "formik";
 import { withLogic } from "../../../HOC/withLogic";
 import { useEffect, useState } from 'react';
+import { DatePicker } from "../../forms/datePicker/DatePicker";
+
 
 
 const FormEmployment = (props) => {
@@ -20,7 +22,8 @@ const FormEmployment = (props) => {
     localValue: localEmployment,
     selectedValueId: selectedEmploymentId,
     addText,
-    updateText
+    updateText,
+    countries
   } = props;
 
   const [show, setShow] = useState(false);
@@ -86,36 +89,54 @@ const FormEmployment = (props) => {
           <CCol xs={6}>
             <CRow>
               <CCol xs={6}>
-                <CFormInput
-                  value={localEmployment.period_from || ''}
-                  onChange={(e)=> handleInput(e, 'period_from')}
-                  type="date"
+                <DatePicker
+                  selected={localEmployment.period_from ? new Date(localEmployment.period_from) : localEmployment.period_from}
+                  onChange={(e)=> {handleInput(e, 'period_from')}}
                   floatingLabel="From"
-                  placeholder="From"
+                  placeholderText="From"
                   name="period_from"
+                  calendarClassName="custom-datepicker"
+                  wrapperClassName="custom-datepicker-wrapper"
+                  dateFormat="MMM, yyyy"
+                  showMonthYearPicker
+                  showPopperArrow={false}
+                  useShortMonthInDropdown={true}
                 />
+
               </CCol>
               <CCol xs={6}>
-                <CFormInput
-                  value={localEmployment.period_to || ''}
-                  onChange={(e)=> handleInput(e, 'period_to')}
-                  type="date"
+                <DatePicker
+                  selected={localEmployment.period_to ? new Date(localEmployment.period_to) : localEmployment.period_to}
+                  onChange={(e)=> {handleInput(e, 'period_to')}}
                   floatingLabel="To"
-                  placeholder="To"
+                  placeholderText="To"
                   name="period_to"
+                  calendarClassName="custom-datepicker"
+                  wrapperClassName="custom-datepicker-wrapper"
+                  dateFormat="MMM, yyyy"
+                  showMonthYearPicker
+                  showPopperArrow={false}
+                  useShortMonthInDropdown={true}
                 />
               </CCol>
             </CRow>
           </CCol>
           <CCol xs={6}>
-            <CFormInput
-              value={localEmployment.country || ''}
-              onChange={(e)=> handleInput(e, 'country')}
-              type="text"
-              floatingLabel="Country"
-              placeholder="Country"
-              name="country"
-            />
+            <CFormSelect 
+                className="custom-select" 
+                onChange={(e)=> handleInput(e, 'country')}
+                value={localEmployment.country || ''}
+                floatingLabel="Country" 
+                placeholder="Country" 
+                name="country"
+              >
+                <option disabled value="country">Country</option>
+                {countries && countries.map(el => {
+                    return (
+                      <option key={el?.id} value={el?.name}>{el?.name}</option>
+                    );
+                })}
+              </CFormSelect>
           </CCol>
           <CCol xs={12}>
             <Textarea

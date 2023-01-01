@@ -6,39 +6,39 @@ const initialSkills = [
       name: 'Communication',
       level: 4,
       selected: false,
-      key: uuid()
+      id: uuid()
    }
    , {
       name: 'Dashboard',
       level: 0,
       selected: false,
-      key: uuid()
+      id: uuid()
    }
    ,
    {
       name: 'Responsive Web Design',
       level: 0,
       selected: false,
-      key: uuid()
+      id: uuid()
 
    },
    {
       name: 'Prototyping',
       level: 0,
       selected: false,
-      key: uuid()
+      id: uuid()
    },
    {
       name: 'User Interface Design',
       level: 0,
       selected: false,
-      key: uuid()
+      id: uuid()
    },
    {
       name: 'PHP',
       level: 0,
       selected: false,
-      key: uuid()
+      id: uuid()
 
    }
 ];

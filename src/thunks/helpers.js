@@ -1,5 +1,5 @@
 import { makeApiCall } from '../api/makeApiCall';
-import { camelToSnakeCase, convertDate } from '../utils';
+import { camelToSnakeCase } from '../utils';
 
 const dateArr = ['periodFrom', 'periodTo', 'dateFrom', 'dateTo'];
 
@@ -57,7 +57,7 @@ export const makeGet = (name, apiFunc = Promise.resolve(), setData) => {
                 const arr = Object.entries(el);
                 const newArr = arr.map(([key, value]) => {
                     if(dateArr.includes(key)) {
-                        return [camelToSnakeCase(key).replace('date', 'period'), convertDate(value.date)];
+                        return [camelToSnakeCase(key).replace('date', 'period'), new Date(value.date).toString()];
                     }
                     return [camelToSnakeCase(key), value];
                 });

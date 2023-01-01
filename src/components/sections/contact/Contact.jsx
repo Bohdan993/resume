@@ -9,6 +9,7 @@ const Contact = () => {
 
    const contact = useSelector((state) => state.contact.contact);
    const loading = useSelector((state) => state.app.loading);
+   const country = useSelector((state) => state.country.countrys);
 
    const [valuesExist, setValuesExist] = useState(false);
 
@@ -35,6 +36,7 @@ const Contact = () => {
             valuesExist={valuesExist} 
             valuesFromStore={contact} 
             className={`row r-gap-30`}
+            countries={country}
          >
          </FormContact>
       </>

@@ -12,6 +12,8 @@ import { ReactComponent as PlusIcon } from '../../../images/icons/plus.svg'
 import { ReactComponent as DownIcon } from '../../../images/icons/down.svg'
 import axios from 'axios';
 import FormData from "form-data";
+import { useDispatch } from "react-redux";
+
 
 const FormContact = () => {
    const [visibleAllInputs, setVisibleAllInputs] = useState(false);
@@ -24,11 +26,12 @@ const FormContact = () => {
    const [nationality, setNationality] = useState('');
    const [city, setCity] = useState('');
    const [adress, setAdress] = useState('');
-   const [zioCode, setZioCode] = useState('');
+   const [zipCode, setZioCode] = useState('');
    const [driverLicense, setDriverLicense] = useState('');
    const [place, setPlace] = useState('');
    const [date, setDate] = useState('');
    const [selectedFile, setSelectedFile] = useState(null);
+   const dispatch = useDispatch();
 
    const handleChangeVisibility = (e) => {
       e.preventDefault();
@@ -59,15 +62,15 @@ const FormContact = () => {
          formData,
          { headers: { 'Content-Type': 'multipart/form-data' }, })
          .then(res => {
-            if (res.data.status === 'session_data_saved') {
-               console.log(res.data.session_id);
-               navigate('/login', {
-                  state: {
-                     sessionId: res.data.session_id
-                  }
-               });
+               if (res.data.status === 'session_data_saved') {
+                  console.log(res.data.session_id);
+                  navigate('/login', {
+                     state: {
+                        sessionId: res.data.session_id
+                     }
+                  });
+               }
             }
-         }
          )
          .catch((error) => console.log(error))
    }
@@ -114,7 +117,7 @@ const FormContact = () => {
                <CFormInput onChange={(e) => setAdress(e.target.value)} value={adress} type="text" floatingLabel="Adress" placeholder="Adress" />
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setZioCode(e.target.value)} value={zioCode} type="text" floatingLabel="Zio Code" placeholder="Zio Code" />
+               <CFormInput onChange={(e) => setZioCode(e.target.value)} value={zipCode} type="text" floatingLabel="Zip Code" placeholder="Zip Code" />
             </CCol>
             <CCol xs={6}>
                <CFormInput onChange={(e) => setDriverLicense(e.target.value)} value={driverLicense} type="text" floatingLabel="Driver license" placeholder="Driver license" />

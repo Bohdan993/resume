@@ -42,6 +42,7 @@ const Textarea = ({
             onChange={onChange}
             // selectedPrewriteItems={selectedPrewriteItems}
             // setSelectedPrewriteItems={setSelectedPrewriteItems}
+            className="prewrite-textarea"
             currentValueId={currentValueId}
             {...rest}
             />

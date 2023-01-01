@@ -11,7 +11,6 @@ const updateHobiess = makeUpdate(`${ROUTES['hobies']}`, ADD_HOBIE);
 export const getHobies = makeGet(`${ROUTES['hobies']}`, GET_HOBIE, setHobiess);
 
 export const makeHobies = (data) => async (dispatch, getState) => {
-    console.log(getState());
     await dispatch(createHobiess(data));
     await dispatch(updateHobiess(data));
 

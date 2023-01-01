@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import uuid from "react-uuid";
-import { useFormikContext} from "formik";
+import { useFormikContext } from "formik";
 
 
 export const withLogic = (Component) => {
@@ -18,7 +18,7 @@ export const withLogic = (Component) => {
         const storeValues = valuesFromStore;
         const [selectedValueId, setSelectedValueId ]= useState(null);
         const [localValue, setLocalValue] = useState({ ...initialState});
-        const [values, setValues] = useState(storeValues);
+        let [values, setValues] = useState(storeValues);
 
         useEffect(() => {
             const value = values.find(value => value.id === selectedValueId);
@@ -77,7 +77,11 @@ export const withLogic = (Component) => {
         
         const handleInput = (event, name, text) => {
             if(event) {
-                setLocalValue((state) => ({ ...state, [name]: event.target.value }));
+                if(!(event instanceof Date)) {
+                    setLocalValue((state) => ({ ...state, [name]: event.target.value }));
+                } else {
+                    setLocalValue((state) => ({ ...state, [name]: String(event) }));
+                }
             } else {
                 setLocalValue((state) => ({ ...state, [name]: text }));
             }

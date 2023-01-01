@@ -10,7 +10,6 @@ export const getSocials = makeGet(`${ROUTES['socials']}`, GET_SOCIALS, setSocial
 
 
 export const makeSocials = (data) => async (dispatch) => {
-    console.log(data);
     await dispatch(createSocialss(data));
     await dispatch(updateSocialss(data));
 

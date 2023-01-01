@@ -16,8 +16,6 @@ export async function dataUrlToFIle(dataUrl) {
 
 export function formatDate(date) {
   const dateObject = date !== '' ? new Date(date) : new Date();
-
-
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
     year: 'numeric'
@@ -35,7 +33,7 @@ export function convertDate(date) {
   const month = dateObj.getMonth() + 1;
   const day = dateObj.getDate();
 
-  return year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
+  return (day < 10 ? '0' + day : day) + '.' + (month < 10 ? '0' + month : month) + '.' + year;
 }
 
 
@@ -49,3 +47,32 @@ export const prewriteList = [
   {id: '6', text: 'Maintained up-to-date knowledge of all retail promotions 2222.\n', selected: false},
   {id: '7', text: 'Maintained up-to-date knowledge of all retail promotions 3333.\n', selected: false}
 ];
+
+
+export function formatValues (values) {
+  let res;
+
+  function formatDate(newEl){
+    for(let key in newEl) {
+      let timestamp = Date.parse(newEl[key]);
+      let dStr = new Date(timestamp).toString();
+      if(newEl[key] === dStr) {
+        newEl[key] = convertDate(newEl[key]);
+      }
+    }
+
+    return newEl;
+  }
+
+  if(Array.isArray(values)) {
+    res = values.map(el => {
+      let newEl = {...el};
+      return formatDate(newEl);
+    })
+  } else if(typeof values === 'object') {
+      let newEl = {...values};
+      res = formatDate(newEl);
+  }
+
+  return res;
+}

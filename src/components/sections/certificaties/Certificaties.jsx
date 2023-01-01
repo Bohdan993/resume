@@ -1,7 +1,22 @@
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import FormCertificaties from "./FormCertificaties";
+import { useSelector } from "react-redux";
+import uuid from 'react-uuid';
+
+const initialState = [{
+   name: "",
+   id: uuid()
+ }];
+
 
 const Certificaties = () => {
+   const loading = useSelector((state) => state.app.loading);
+   const certificaties = useSelector(state => state.certificaties.certificatiess);
+
+   if(loading) {
+      return null;
+   }
+
    return (
       <>
          <HeadMainContent
@@ -12,7 +27,9 @@ const Certificaties = () => {
          <FormCertificaties
             className={`row r-gap-30`}
             skipButton={true}
-            // initialState={initialState}
+            initialState={initialState}
+            valuesFromStore={certificaties}
+            buttonClassName="gap-4 d-flex"
          ></FormCertificaties>
       </>
    )

@@ -7,7 +7,7 @@ import './skill.scss'
 
 const Skills = () => {
    const [visibleRating, setVisibleRating] = useState(true);
-   const skills = useSelector((state) => state.skills.skills);
+   const skills = useSelector((state) => state.skills.skillss);
    const loading = useSelector((state) => state.app.loading);
 
    const changeSwitch = (value) => {
@@ -32,6 +32,7 @@ const Skills = () => {
             className={`row r-gap-30`}
             skipButton={true}
             valuesFromStore={skills}
+            buttonClassName="gap-4 d-flex"
          >
 
          </FormSkill>

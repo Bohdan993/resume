@@ -11,6 +11,8 @@ import DraggedItem from "../../other/draggedItem/DraggedItem";
 import { withForm } from "../../../HOC/withForm";
 import { withLogic } from "../../../HOC/withLogic";
 import { withFormik } from "formik";
+import { DatePicker } from "../../forms/datePicker/DatePicker";
+
 
 const FormActivity = (props) => {
    const {
@@ -78,24 +80,34 @@ const FormActivity = (props) => {
             <CCol xs={6}>
                <CRow>
                   <CCol xs={6}>
-                  <CFormInput 
-                        value={localActivity.period_from}
-                        type="date" 
-                        floatingLabel="From" 
-                        placeholder="From" 
-                        onChange={(e)=>handleInput(e, 'period_from')}
-                        name="period_from"
-                     />
+                        <DatePicker
+                           selected={localActivity.period_from ? new Date(localActivity.period_from) : localActivity.period_from}
+                           onChange={(e)=> {handleInput(e, 'period_from')}}
+                           floatingLabel="From"
+                           placeholderText="From"
+                           name="period_from"
+                           calendarClassName="custom-datepicker"
+                           wrapperClassName="custom-datepicker-wrapper"
+                           dateFormat="MMM, yyyy"
+                           showMonthYearPicker
+                           showPopperArrow={false}
+                           useShortMonthInDropdown={true}
+                        />
                   </CCol>
                   <CCol xs={6}>
-                  <CFormInput 
-                           value={localActivity.period_to}
-                           type="date" 
-                           floatingLabel="To" 
-                           placeholder="To" 
-                           onChange={(e)=>handleInput(e, 'period_to')}
-                           name="period_to"
-                        />
+                     <DatePicker
+                        selected={localActivity.period_to ? new Date(localActivity.period_to) : localActivity.period_to}
+                        onChange={(e)=> {handleInput(e, 'period_to')}}
+                        floatingLabel="To"
+                        placeholderText="To"
+                        name="period_to"
+                        calendarClassName="custom-datepicker"
+                        wrapperClassName="custom-datepicker-wrapper"
+                        dateFormat="MMM, yyyy"
+                        showMonthYearPicker
+                        showPopperArrow={false}
+                        useShortMonthInDropdown={true}
+                     />
                   </CCol>
                </CRow>
             </CCol>

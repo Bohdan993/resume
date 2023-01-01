@@ -8,67 +8,59 @@ import {
 import { withFormik, useFormikContext } from "formik";
 import { withForm } from "../../../HOC/withForm";
 import {useState, useEffect, Fragment} from 'react';
+import uuid from 'react-uuid';
 
+const FormLanguages = ({valuesFromStore, initialState}) => {
+      const [inputs, setInputs] = useState(valuesFromStore.length > 0 ? valuesFromStore : initialState);
+      const { setValues: setFormikValues} = useFormikContext();
 
-const languageArr = [{id: 1}, {id: 2}];
+      useEffect(() => {
+         setFormikValues(inputs);
+      }, [inputs, setFormikValues]);
 
-const FormLanguages = () => {
-   const { setValues: setFormikValues} = useFormikContext();
-   const [localLanguages, setLocalLanguages] = useState([]);
-
-   useEffect(() => {
-      setFormikValues(localLanguages);
-  }, [localLanguages, setFormikValues]);
-
-
-
-  const handleInput = (event, name, id) => {
-      let found = localLanguages.find(el => el.id === id);
-
-      if(found) {
-         setLocalLanguages((state) => {
-            const index = state.findIndex(el => el.id === id);
-            const before = state.slice(0, index);
-            const after = state.slice(index + 1);
-            return [...before, {...found, [name]: event.target.value}, ...after];
+      const handleChange = (index, label, event) => {
+         let newInputs = inputs.map((input, indexCurrent) => {
+            if (indexCurrent !== index) return input;
+            return { ...input, [label]: event.target.value };
          });
-      } else {
-         setLocalLanguages((state) => {
-            return [...state, {id, [name]: event.target.value}];
-         });
-      }
+         if (index === inputs.length - 1) {
+            newInputs = newInputs.concat([{ language: '', level: '', id: uuid() }]);
+         }
+         setInputs(newInputs);
+      };
 
-   };
+      const items = inputs.map((item, index) => {
+         return (
+            <Fragment key={item?.id}>
+            <CCol xs={6}>
+               <CFormInput
+                  value={item?.language || ''}
+                  type="text" 
+                  floatingLabel="Language" 
+                  placeholder="Language" 
+                  onChange={(e)=>handleChange(index, 'language', e)}
+               />
+            </CCol>
+            <CCol xs={6}>
+               <CFormSelect className="custom-select" 
+                  value={item?.level || ''}
+                  onChange={(e)=>handleChange(index, 'level', e)}
+               >
+                  <option>Level</option>
+                  <option value="1">Native</option>
+                  <option value="2">Two</option>
+                  <option value="3" disabled>Three</option>
+               </CFormSelect>
+            </CCol>
+         </Fragment>
+   
+         )
+      });
 
    return (
       <>
          <CRow className="g-30 r-gap-30">
-            {languageArr.map(language => {
-               return (
-                  <Fragment key={language.id}>
-                     <CCol xs={6}>
-                        <CFormInput
-                           value={localLanguages.find(el => el.id === language.id)?.language || ''}
-                           type="text" 
-                           floatingLabel="Language" 
-                           placeholder="Language" 
-                           onChange={(e)=>handleInput(e, 'language', language.id)}
-                        />
-                     </CCol>
-                     <CCol xs={6}>
-                        <CFormSelect className="custom-select" 
-                           value={localLanguages.find(el => el.id === language.id)?.level || ''}
-                           onChange={(e)=>handleInput(e, 'level', language.id)}
-                        >
-                           <option>Level</option>
-                           <option value="1">Native</option>
-                           <option value="2">Two</option>
-                           <option value="3" disabled>Three</option>
-                        </CFormSelect>
-                     </CCol>
-                  </Fragment>
-               );
-            })}
+            {items}
          </CRow>
       </>
    )

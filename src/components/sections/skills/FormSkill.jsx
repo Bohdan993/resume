@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
    CCol,
    CRow,
@@ -7,35 +7,62 @@ import {
 import { withFormik, useFormikContext } from "formik";
 import { withForm } from "../../../HOC/withForm";
 import initialSkills from "./InitialSkills";
-import ModifyItems from './ModifyItems'
+import ModifyItems from './ModifyItems';
 
-const selectedItems = initialSkills.filter(({ selected }) => selected === true);
-const notSelectedItems = initialSkills.filter(({ selected }) => selected === false);
 
-const FormSkill = ({ visibleRating, ...rest }) => {
+
+const getUniq = (arr, key) => {
+   let seen = {};
+   let uniq = [];
+
+   arr.forEach(el => {
+      if(!(el[key] in seen)) {
+         seen[el[key]] = el[key];
+         uniq.push(el);
+      }
+   })
+
+   return uniq;
+}
+
+const FormSkill = ({ visibleRating, valuesFromStore, ...rest }) => {
+
+   const localSkills = useMemo(()=>{
+      const selectedItemsFromStore = valuesFromStore.map(el => {
+         return {...el, selected: true}
+      });
+      const localInitialSkills = [...selectedItemsFromStore, ...initialSkills];
+      return getUniq(localInitialSkills, 'name')
+   }, [valuesFromStore]);
+
+   const selectedItems = localSkills.filter(({ selected }) => selected === true);
+   const notSelectedItems = localSkills.filter(({ selected }) => selected === false);
 
    const { setValues: setFormikValues } = useFormikContext();
-   const [skills, setSkils] = useState(initialSkills);
+   const [skills, setSkils] = useState(localSkills);
    const [localSelectedItems, setSelectedItems] = useState(selectedItems);
    const [localNotSelectedItems, setNotSelectedItems] = useState(notSelectedItems);
 
 
    const ratingChanged = (newRating, id) => {
-      setSkils(prev => prev.map((item) => id === item.key ? { ...item, rating: newRating } : item));
+      setSkils(prev => prev.map((item) => id === item.id? { ...item, level: newRating } : item));
    };
 
    const changeItem = (id, e) => {
       e.preventDefault();
-      setSkils(prev => prev.map((item) => id === item.key ? { ...item, selected: !item.selected } : item));
+      setSkils(prev => prev.map((item) => id === item.id? { ...item, selected: !item.selected } : item));
    }
 
    useEffect(() => {
-      setFormikValues(localSelectedItems);
       const selectedItems = skills.filter(({ selected }) => selected === true);
       setSelectedItems(selectedItems);
       const notSelectedItems = skills.filter(({ selected }) => selected === false);
       setNotSelectedItems(notSelectedItems);
   }, [skills, setFormikValues]);
+
+  useEffect(()=>{
+   setFormikValues(localSelectedItems);
+  }, [localSelectedItems, setFormikValues]);
 
 
    return (

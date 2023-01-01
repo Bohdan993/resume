@@ -1,14 +1,13 @@
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import FormCourse from "./FormCourse";
 import { useSelector } from "react-redux";
-import { formatDate } from "../../../utils";
 import uuid from "react-uuid";
 
 const initialState = {
    title: "",
    institution: "",
-   period_from: formatDate(new Date()),
-   period_to: formatDate(new Date()),
+   period_from: null,
+   period_to: null,
    id: uuid()
  };
 
@@ -32,8 +31,9 @@ const Course = () => {
             className={`row`} 
             initialState={initialState}
             addText="Add one more course"
-            updateText="Update course"
+            updateText="Add one more course"
             skipButton={true}
+            buttonClassName="gap-4 d-flex mt-4"
          ></FormCourse>
       </>
    )

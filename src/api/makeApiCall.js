@@ -3,7 +3,6 @@ import { apiPrefix, headers } from "../constants/common";
 
 export function makeApiCall (method, endpoint, data = null, customHeaders) {
     let FD;
-
     const options = {
       method,
       "url": `${apiPrefix}${endpoint}`,

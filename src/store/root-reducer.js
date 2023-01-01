@@ -12,6 +12,7 @@ import { reducer as languagesReducer } from '../slices/languages';
 import { reducer as referencesReducer } from '../slices/reference';
 import { reducer as skillsReducer } from '../slices/skills';
 import { reducer as socialsReducer } from '../slices/socials';
+import { reducer as countryReducer } from '../slices/country';
 
 const combinedReducer = combineReducers({
   app: appReducer,
@@ -26,10 +27,10 @@ const combinedReducer = combineReducers({
   languages: languagesReducer,
   reference: referencesReducer,
   skills: skillsReducer,
-  socials: socialsReducer
+  socials: socialsReducer,
+  country: countryReducer
 });
 
 export const rootReducer = (state, action) => {
-  console.log(state);
   return combinedReducer(state, action);
 };

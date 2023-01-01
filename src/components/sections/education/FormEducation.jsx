@@ -12,6 +12,7 @@ import DraggedItem from "../../other/draggedItem/DraggedItem";
 import { withForm } from "../../../HOC/withForm";
 import { withLogic } from "../../../HOC/withLogic";
 import { withFormik } from "formik";
+import { DatePicker } from "../../forms/datePicker/DatePicker";
 
 
 import './education.scss'
@@ -83,24 +84,34 @@ const FormEducation = (props) => {
             <CCol xs={6}>
                <CRow>
                   <CCol xs={6}>
-                     <CFormInput 
-                        value={localEducation.period_from}
-                        type="date" 
-                        floatingLabel="From" 
-                        placeholder="From" 
-                        onChange={(e)=>handleInput(e, 'period_from')}
+                     <DatePicker
+                        selected={localEducation.period_from ? new Date(localEducation.period_from) : localEducation.period_from}
+                        onChange={(e)=> {handleInput(e, 'period_from')}}
+                        floatingLabel="From"
+                        placeholderText="From"
                         name="period_from"
+                        calendarClassName="custom-datepicker"
+                        wrapperClassName="custom-datepicker-wrapper"
+                        dateFormat="MMM, yyyy"
+                        showMonthYearPicker
+                        showPopperArrow={false}
+                        useShortMonthInDropdown={true}
                      />
                   </CCol>
                   <CCol xs={6}>
-                     <CFormInput 
-                           value={localEducation.period_to}
-                           type="date" 
-                           floatingLabel="To" 
-                           placeholder="To" 
-                           onChange={(e)=>handleInput(e, 'period_to')}
-                           name="period_to"
-                        />
+                     <DatePicker
+                        selected={localEducation.period_to ? new Date(localEducation.period_to) : localEducation.period_to}
+                        onChange={(e)=> {handleInput(e, 'period_to')}}
+                        floatingLabel="To"
+                        placeholderText="To"
+                        name="period_to"
+                        calendarClassName="custom-datepicker"
+                        wrapperClassName="custom-datepicker-wrapper"
+                        dateFormat="MMM, yyyy"
+                        showMonthYearPicker
+                        showPopperArrow={false}
+                        useShortMonthInDropdown={true}
+                     />
                   </CCol>
                </CRow>
             </CCol>

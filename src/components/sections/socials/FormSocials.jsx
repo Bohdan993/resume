@@ -9,37 +9,46 @@ import uuid from 'react-uuid';
 import { withFormik, useFormikContext } from "formik";
 import { withForm } from "../../../HOC/withForm";
 
-const FormSocials = () => {
+const FormSocials = ({valuesFromStore, initialState}) => {
 
-   const [inputs, setInputs] = useState([{
-      label: '',
-      link: '',
-      key: uuid()
-   }]);
+   const [inputs, setInputs] = useState(valuesFromStore.length > 0 ? valuesFromStore : initialState);
    const { setValues: setFormikValues} = useFormikContext();
 
    useEffect(() => {
       setFormikValues(inputs);
   }, [inputs, setFormikValues]);
 
-   const handleChange = (index, event) => {
+   const handleChange = (index, label, event) => {
       let newInputs = inputs.map((input, indexCurrent) => {
          if (indexCurrent !== index) return input;
-         return { ...input, label: event.target.value };
+         return { ...input, [label]: event.target.value };
       });
       if (index === inputs.length - 1) {
-         newInputs = newInputs.concat([{ label: '', link: '', key: uuid() }]);
+         newInputs = newInputs.concat([{ name: '', link: '', id: uuid() }]);
       }
       setInputs(newInputs);
    };
+
+
    const items = inputs.map((item, index) => {
       return (
-         <CRow key={item.key} >
+         <CRow key={item.id} >
             <CCol xs={6} >
-               <CFormInput type="text" value={item.name} placeholder='Label' onChange={e => handleChange(index, e)} />
+               <CFormInput
+                  type="text" 
+                  value={item.name || ''} 
+                  placeholder='Label' 
+                  onChange={e => handleChange(index, 'name', e)} 
+                />
             </CCol>
             <CCol xs={6} >
-               {item.label.trim().length > 0 ? <CFormInput type="text" value={item.name} placeholder='Link' onChange={e => handleChange(index, e)} /> : null}
+               {item?.name?.trim().length > 0 ? 
+               <CFormInput 
+                  type="text" 
+                  value={item.link || ''} 
+                  placeholder='Link' 
+                  onChange={e => handleChange(index, 'link', e)} 
+               /> : null}
             </CCol>
          </CRow>
 

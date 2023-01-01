@@ -8,17 +8,11 @@ import { withForm} from "../../../HOC/withForm";
 import { useState, useEffect } from "react";
 import { prewriteList as list } from "../../../utils";
 
-const hobieArr = [{id: 1}];
 
-const FormHobies = (props) => {
-
-   const {
-      handleBlur
-    } = props;
-
+const FormHobies = ({handleBlur, valuesFromStore, initialState}) => {
     const { setValues: setFormikValues } = useFormikContext();
     const [show, setShow] = useState(false);
-    const [localHobies, setLocalHobies] = useState([]);
+    const [localHobies, setLocalHobies] = useState(valuesFromStore.length > 0 ? valuesFromStore : initialState);
 
     useEffect(() => {
       setFormikValues(localHobies);
@@ -29,7 +23,7 @@ const FormHobies = (props) => {
       setShow(false);
     }
 
-    const handleInput = (event, name, id, text) => {
+    const handleInput = (_, name, id, text) => {
       let found = localHobies.find(el => el.id === id);
    
       if(found) {
@@ -50,25 +44,27 @@ const FormHobies = (props) => {
    return (
       <>
          <CRow className="g-30 r-gap-30">
-            {hobieArr.map(hobie => (
-               <CCol xs={12} key={hobie?.id}>
-                  <Textarea
-                  value={localHobies.find(el => el.id === hobie?.id)?.text || ''}
-                  onChange={(_, text) => handleInput(null, 'text', hobie?.id, text)} 
-                  onFocus={handleFocus}
-                  onBlur={handleBlur} 
-                  hideButton={false} 
-                  name="text"
-                  prewrite={true}
-                  prewritePopupShow={show}
-                  prewriteButtonHandler={()=>setShow(prev => !prev)}
-                  prewriteItems={list}
-                  placeholder={'Description of hobbie'}
-                  id={"hobiesTextarea" + hobie?.id}
-                  currentValueId={'1'}
-                  />
-            </CCol>
-            ))}
+            {localHobies.map(hobie => {
+               return (
+                  <CCol xs={12} key={hobie?.id}>
+                     <Textarea
+                        value={hobie?.text || ''}
+                        onChange={(_, text) => handleInput(null, 'text', hobie?.id, text)} 
+                        onFocus={handleFocus}
+                        onBlur={handleBlur} 
+                        hideButton={false} 
+                        name="text"
+                        prewrite={true}
+                        prewritePopupShow={show}
+                        prewriteButtonHandler={()=>setShow(prev => !prev)}
+                        prewriteItems={list}
+                        placeholder={'Description of hobbie'}
+                        id={"hobiesTextarea" + hobie?.id}
+                        currentValueId={hobie?.id}
+                     />
+               </CCol>
+               )
+            })}
 
          </CRow>
       </>

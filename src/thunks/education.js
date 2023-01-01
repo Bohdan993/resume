@@ -9,9 +9,9 @@ const updateEducations = makeUpdate(`${ROUTES['education']}`, UPDATE_EDUCATION);
 export const getEducation = makeGet(`${ROUTES['education']}`, GET_EDUCATION, setEducations);
 
 
-export const makeEducation = (data) => async (dispatch) => {
-    await dispatch(createEducations(data));
-    await dispatch(updateEducations(data));
+export const makeEducation = (data, __, formattedData) => async (dispatch) => {
+    await dispatch(createEducations(formattedData));
+    await dispatch(updateEducations(formattedData));
 
     dispatch(setEducations(data));
     return true;

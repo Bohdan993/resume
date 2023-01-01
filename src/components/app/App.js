@@ -6,6 +6,7 @@ import {
    Route,
 } from "react-router-dom";
 import LoginPage from '../loginPage/LoginPage'
+
 import Contact from '../sections/contact_old/Contact';
 import Employment from '../sections/employment/Employment';
 import Education from '../sections/education/Education';
@@ -19,9 +20,10 @@ import Reference from '../sections/references/Reference';
 import Certificaties from '../sections/certificaties/Certificaties';
 import Socials from '../sections/socials/Socials';
 import { ROUTES } from '../../constants/routes';
-import { getContact } from "../../thunks/contact";
-import { useDispatch } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { useEffect } from 'react';
+import { setLoading } from '../../slices/app';
+import { getAppData } from '../../thunks/app';
 
 
 
@@ -30,11 +32,18 @@ import { useEffect } from 'react';
 
 
 function App() {
-
    const dispatch = useDispatch();
    useEffect(()=>{
-      dispatch(getContact());
-   }, []);
+      async function fetchData(){
+         try {
+            await dispatch(getAppData());
+         } catch(err) {
+            console.error('Something went wrong', err);
+            dispatch(setLoading(false));
+         }
+      }
+      fetchData();
+   }, [dispatch]);
 
    return (
       <BrowserRouter>

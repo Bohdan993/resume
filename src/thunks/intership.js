@@ -9,9 +9,9 @@ const updateInterships = makeUpdate(`${ROUTES['intership']}`, UPDATE_INTERSHIP);
 
 export const getIntership = makeGet(`${ROUTES['intership']}`, GET_INTERSHIP, setInterships);
 
-export const makeIntership = (data) => async (dispatch) => {
-    await dispatch(createInterships(data));
-    await dispatch(updateInterships(data));
+export const makeIntership = (data, __, formattedData) => async (dispatch) => {
+    await dispatch(createInterships(formattedData));
+    await dispatch(updateInterships(formattedData));
 
     dispatch(setInterships(data));
     return true;

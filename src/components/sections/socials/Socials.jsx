@@ -1,8 +1,23 @@
+import { useSelector } from "react-redux";
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import FormSocials from "./FormSocials";
+import uuid from 'react-uuid';
+
+const initialState = [{
+   name: '',
+   link: '',
+   id: uuid()
+ }];
 
 const Socials = () => {
+   const socials = useSelector((state) => state.socials.socialss);
+   const loading = useSelector((state) => state.app.loading);
 
+
+   if(loading) {
+      return null;
+   }
+   
    return (
       <>
          <HeadMainContent
@@ -11,7 +26,13 @@ const Socials = () => {
             \nPerhaps It will be a link to your portfolio, LinkedIn profile, or personal website`}
          >
          </HeadMainContent>
-         <FormSocials></FormSocials>
+         <FormSocials
+               className={`row r-gap-30`}
+               skipButton={true}
+               valuesFromStore={socials}
+               initialState={initialState}
+               buttonClassName="gap-4 d-flex"
+         ></FormSocials>
       </>
    )
 }

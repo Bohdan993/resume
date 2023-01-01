@@ -8,12 +8,11 @@ import {useState, useEffect, Fragment} from 'react';
 import { withFormik, useFormikContext } from "formik";
 import { withForm } from "../../../HOC/withForm";
 
-const referenceArr = [{id: 1}];
+const FormReference = ({valuesFromStore, initialState}) => {
 
-const FormReference = ({initialState}) => {
 
-   const { setValues: setFormikValues} = useFormikContext();
-   const [localReference, setLocalReference] = useState([]);
+   const { setValues: setFormikValues } = useFormikContext();
+   const [localReference, setLocalReference] = useState(valuesFromStore.length > 0 ? valuesFromStore : initialState);
 
    useEffect(() => {
       setFormikValues(localReference);
@@ -42,12 +41,12 @@ const FormReference = ({initialState}) => {
    return (
       <>
          <CRow className="g-30 r-gap-30">
-            {referenceArr.map(reference => {
+            {localReference.map(reference => {
                return (
-                  <Fragment key={reference.id}>
+                  <Fragment key={reference?.id}>
                      <CCol xs={6}>
                      <CFormInput 
-                        value={localReference.find(el => el.id === reference.id)?.full_name || ''}
+                        value={reference?.full_name || ''}
                         type="text" 
                         floatingLabel="Referent Full name" 
                         placeholder="Referent Full name" 
@@ -56,7 +55,7 @@ const FormReference = ({initialState}) => {
                   </CCol>
                   <CCol xs={6}>
                      <CFormInput 
-                        value={localReference.find(el => el.id === reference.id)?.company || ''}
+                        value={reference?.company || ''}
                         type="text" 
                         floatingLabel="Company" 
                         placeholder="Company" 
@@ -65,7 +64,7 @@ const FormReference = ({initialState}) => {
                   </CCol>
                   <CCol xs={6}>
                      <CFormInput 
-                        value={localReference.find(el => el.id === reference.id)?.email || ''}
+                        value={reference?.email || ''}
                         type="email" 
                         floatingLabel="E-mail*" 
                         placeholder="Phone" 
@@ -74,7 +73,7 @@ const FormReference = ({initialState}) => {
                   </CCol>
                   <CCol xs={6}>
                      <CFormInput 
-                        value={localReference.find(el => el.id === reference.id)?.phone || ''}
+                        value={reference?.phone || ''}
                         type="text" 
                         floatingLabel="Phone" 
                         placeholder="Phone" 

@@ -1,11 +1,13 @@
-import { useState } from "react";
+
 import { useSelector } from "react-redux";
 import HeadMainContent from "../../headMainContent/HeadMainContent";
 import FormHobies from "./FormHobies";
+import uuid from 'react-uuid';
 
-const initialState = {
+const initialState = [{
    text: "",
- };
+   id: uuid()
+ }];
 
 
 const Hobies = () => {
@@ -29,6 +31,7 @@ const Hobies = () => {
             className={`row r-gap-30`}
             skipButton={true}
             initialState={initialState}
+            buttonClassName="gap-4 d-flex"
          >
          </FormHobies>
       </>
