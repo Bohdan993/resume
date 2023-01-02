@@ -23,9 +23,6 @@ import { makeSocials } from "../thunks/socials";
 import { formatValues } from "../utils";
 
 
-
-
-
  const thunks = {
     makeContact,
     makeEmployment,
@@ -50,7 +47,7 @@ import { formatValues } from "../utils";
         return false
     }
 
-    return '/' + allPathNames[index + 1].slice(0,1).toLowerCase() + allPathNames[index + 1].slice(1);
+    return allPathNames?.[index + 1] ? ('/' + allPathNames?.[index + 1]?.slice(0,1).toLowerCase() + allPathNames?.[index + 1]?.slice(1)) : ('/');
 }
  
 

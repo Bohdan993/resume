@@ -13,6 +13,7 @@ import { ReactComponent as DownIcon } from '../../../images/icons/down.svg'
 import axios from 'axios';
 import FormData from "form-data";
 import { useDispatch } from "react-redux";
+import { DatePicker } from "../../forms/datePicker/DatePicker";
 
 
 const FormContact = () => {
@@ -29,7 +30,7 @@ const FormContact = () => {
    const [zipCode, setZioCode] = useState('');
    const [driverLicense, setDriverLicense] = useState('');
    const [place, setPlace] = useState('');
-   const [date, setDate] = useState('');
+   const [date, setDate] = useState(null);
    const [selectedFile, setSelectedFile] = useState(null);
    const dispatch = useDispatch();
 
@@ -63,7 +64,6 @@ const FormContact = () => {
          { headers: { 'Content-Type': 'multipart/form-data' }, })
          .then(res => {
                if (res.data.status === 'session_data_saved') {
-                  console.log(res.data.session_id);
                   navigate('/login', {
                      state: {
                         sessionId: res.data.session_id
@@ -73,9 +73,6 @@ const FormContact = () => {
             }
          )
          .catch((error) => console.log(error))
-   }
-   const handleClick = () => {
-      navigate('/login');
    }
    const classButton = visibleAllInputs ? 'active show-hidden' : 'show-hidden';
    const textInButton = visibleAllInputs ? 'Hide additional details' : 'Edit additional details';
@@ -129,7 +126,19 @@ const FormContact = () => {
                <CFormInput onChange={(e) => setPlace(e.target.value)} value={place} type="text" floatingLabel="Place of birth" placeholder="Place of birth" />
             </CCol>
             <CCol xs={6}>
-               <CFormInput onChange={(e) => setDate(e.target.value)} value={date} type="date" floatingLabel="Date of birth" placeholder="Date of birth" />
+               {/* <CFormInput onChange={(e) => setDate(e.target.value)} value={date} type="date" floatingLabel="Date of birth" placeholder="Date of birth" /> */}
+               <DatePicker
+                  selected={date ? new Date(date) : date}
+                  onChange={(date) => setDate(date.toString())}
+                  placeholderText="Date of birth"
+                  name="date_of_birth"
+                  calendarClassName="custom-datepicker"
+                  wrapperClassName="custom-datepicker-wrapper-2"
+                  dateFormat="MMM, yyyy"
+                  showMonthYearPicker
+                  showPopperArrow={false}
+                  useShortMonthInDropdown={true}
+               />
             </CCol>
          </CRow>}
 

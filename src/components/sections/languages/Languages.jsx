@@ -11,7 +11,8 @@ import uuid from 'react-uuid';
 
 
 const Languages = () => {
-   const languages = useSelector(state => state.languages.languagess);
+   let languages = useSelector(state => state.languages.languagess);
+   languages = languages.filter(el => el?.language);
    const loading = useSelector((state) => state.app.loading);
 
    if(loading) {
@@ -25,7 +26,7 @@ const Languages = () => {
          >
          </HeadMainContent>
          <FormLanguages
-            className={`row r-gap-30`}
+            className={`row r-gap-30 mt-4`}
             skipButton={true}
             initialState={initialState}
             valuesFromStore={languages}

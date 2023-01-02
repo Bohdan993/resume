@@ -43,7 +43,8 @@ const ResumeMain = () => {
                </div>
             </CCol>
          </CRow>
-         <CRow className="resume-main__row mb-4">
+
+         {employments?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Employment</div>
@@ -67,9 +68,9 @@ const ResumeMain = () => {
                   );
                })}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {educations?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Education</div>
@@ -91,38 +92,31 @@ const ResumeMain = () => {
                   </Fragment>
                ))}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {skills?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Skills</div>
             </CCol>
             <CCol className="resume-main__col2">
                {skills.map((el, ind, arr) => {
-                  const stars = <ReactStars
-                  onChange={(e) => {return false;}}
-                  count={5}
-                  value={arr[ind]?.level ? Number(arr[ind]?.level) : 0}
-                  size={12}
-                  activeColor={'#6DC26C'} />
-
-                  const starsNext = <ReactStars
-                  onChange={(e) => {return false;}}
-                  count={5}
-                  value={arr[ind + 1]?.level ? Number(arr[ind + 1]?.level) : 0}
-                  size={12}
-                  activeColor={'#6DC26C'} />
                   if(!(ind%2)) {
                      return (
                         <Fragment key={el?.id}>
                            <div className="d-flex flex-wrap justify-content-between align-items-center">
-                              <div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center">
+                              <div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center me-4">
                                  <div className="resume-main__head-text" style={{fontWeight: 350}}>
                                     {arr[ind]?.name}
                                  </div>
                                  <div className="resume-main__head-text">
-                                    {stars}
+                                 <ReactStars
+                                    key={arr[ind]?.name + '-' + arr[ind]?.level}
+                                    edit={false}
+                                    count={5}
+                                    value={arr[ind]?.level ? Number(arr[ind]?.level) : 0}
+                                    size={12}
+                                    activeColor={'#6DC26C'} />
                                  </div>
                               </div>
                               <div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center">
@@ -130,7 +124,13 @@ const ResumeMain = () => {
                                     {arr[ind + 1]?.name}
                                  </div>
                                  <div className="resume-main__head-text">
-                                    {starsNext}
+                                    <ReactStars
+                                       key={arr[ind + 1]?.name + '-' + arr[ind + 1]?.level}
+                                       edit={false}
+                                       count={5}
+                                       value={arr[ind + 1]?.level ? Number(arr[ind + 1]?.level) : 0}
+                                       size={12}
+                                       activeColor={'#6DC26C'} />
                                  </div>
                               </div>
                            </div>
@@ -139,9 +139,9 @@ const ResumeMain = () => {
                   }
                })}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {socials?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Social Links</div>
@@ -163,9 +163,9 @@ const ResumeMain = () => {
                   </Fragment>
                ))}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {hobies?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Hobbies</div>
@@ -179,9 +179,9 @@ const ResumeMain = () => {
                   </Fragment>
                ))}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {activity?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Extra-curricular activities</div>
@@ -203,9 +203,9 @@ const ResumeMain = () => {
                </Fragment>
                ))}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {course?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Courses</div>
@@ -224,9 +224,9 @@ const ResumeMain = () => {
                </Fragment>
                ))}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {intership?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Intership</div>
@@ -248,57 +248,60 @@ const ResumeMain = () => {
                </Fragment>
                ))}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {languages?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Languages</div>
             </CCol>
             <CCol className="resume-main__col2">
                {languages.map((el, ind, arr) => {
-                  const stars = <ReactStars
-                  onChange={(e) => {return false;}}
-                  count={5}
-                  value={arr[ind]?.level ? Number(arr[ind]?.level) : 0}
-                  size={12}
-                  activeColor={'#6DC26C'} />;
-
-                  const starsNext = <ReactStars
-                  onChange={(e) => {return false;}}
-                  count={5}
-                  value={arr[ind + 1]?.level ? Number(arr[ind + 1]?.level) : 0}
-                  size={12}
-                  activeColor={'#6DC26C'} />;
+                  console.log(arr[ind]);
                   if(!(ind%2)) {
                      return (
                         <Fragment key={el?.id}>
-                           <div className="d-flex flex-wrap justify-content-between align-items-center">
-                              <div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center">
+                           <div className="d-flex flex-wrap justify-content-start align-items-center">
+                              {arr[ind]?.language ? (<div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center me-4">
                                  <div className="resume-main__head-text" style={{fontWeight: 350}}>
                                     {arr[ind]?.language}
                                  </div>
                                  <div className="resume-main__head-text">
-                                    {stars}
+                                 <ReactStars
+                                    key={arr[ind]?.language + '-' + arr[ind]?.level}
+                                    count={5}
+                                    value={arr[ind]?.level ? Number(arr[ind]?.level) : 0}
+                                    size={12}
+                                    edit={false}
+                                    activeColor={'#6DC26C'} />
                                  </div>
-                              </div>
-                              <div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center">
+                              </div>) : null}
+
+                              {arr[ind + 1]?.language ? (<div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center">
                                  <div className="resume-main__head-text" style={{fontWeight: 350}}>
                                     {arr[ind + 1]?.language}
                                  </div>
                                  <div className="resume-main__head-text">
-                                    {starsNext}
+                                 <ReactStars
+                                    key={arr[ind + 1]?.language + '-' + arr[ind + 1]?.level}
+                                    count={5}
+                                    value={arr[ind + 1]?.level ? Number(arr[ind + 1]?.level) : 0}
+                                    size={12}
+                                    edit={false}
+                                    activeColor={'#6DC26C'} />
                                  </div>
-                              </div>
+                              </div>) : null}
+
                            </div>
                         </Fragment>
                      );
                   }
                })}
             </CCol>
-         </CRow>
+         </CRow>) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {reference?.length ? (
+            <CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   References</div>
@@ -321,8 +324,9 @@ const ResumeMain = () => {
                ))}
             </CCol>
          </CRow>
+         ) : null}
 
-         <CRow className="resume-main__row mb-4">
+         {certificaties?.length ? (<CRow className="resume-main__row mb-4">
             <CCol className="resume-main__col1">
                <div className="resume-main__label">
                   Certificates</div>
@@ -330,16 +334,15 @@ const ResumeMain = () => {
             <CCol className="resume-main__col2">
                {certificaties.map(el => (
                   <Fragment key={el?.id}>
-                  <div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-between align-items-center">
+                  {el?.name ? (<div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-between align-items-center">
                      <div className="resume-main__title2">
                         {el?.name}
                      </div>
-                  </div>
+                  </div>) : null}
                </Fragment>
                ))}
             </CCol>
-         </CRow>
-
+         </CRow>) : null}
 
 
       </div>

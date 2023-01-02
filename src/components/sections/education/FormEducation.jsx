@@ -36,7 +36,7 @@ const FormEducation = (props) => {
       <>
          {
             educations.length ? (      
-               <CRow className="mt-4">
+               <CRow className="">
                   <CCol>
                   <div className="dragged">
                      {educations.map((education) => (

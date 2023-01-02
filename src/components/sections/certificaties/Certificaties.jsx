@@ -11,8 +11,8 @@ const initialState = [{
 
 const Certificaties = () => {
    const loading = useSelector((state) => state.app.loading);
-   const certificaties = useSelector(state => state.certificaties.certificatiess);
-
+   let certificaties = useSelector(state => state.certificaties.certificatiess);
+   certificaties = certificaties.filter(el => el?.name);
    if(loading) {
       return null;
    }

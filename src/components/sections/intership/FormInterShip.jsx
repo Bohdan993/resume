@@ -153,12 +153,13 @@ const FormInterShip = (props) => {
 export default withFormik({ 
    mapPropsToValues: () => {
          const initialValues = { 
-           'facility': '',
-           'degree': '',
+           'job_title': '',
+           'employer': '',
            'period_from': '',
            'peiod_to': '',
-           'study': '',
-           'description': ''
+           'city': '',
+           'description': '',
+
          }
  
          return initialValues;

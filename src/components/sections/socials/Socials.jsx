@@ -10,7 +10,8 @@ const initialState = [{
  }];
 
 const Socials = () => {
-   const socials = useSelector((state) => state.socials.socialss);
+   let socials = useSelector((state) => state.socials.socialss);
+   socials = socials.filter(el => el?.name);
    const loading = useSelector((state) => state.app.loading);
 
 

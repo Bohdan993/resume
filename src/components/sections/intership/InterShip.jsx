@@ -9,6 +9,7 @@ const initialState = {
    period_from: null,
    period_to: null,
    city: "",
+   employer: "",
    description: "",
    id: uuid()
  };

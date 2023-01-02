@@ -1,13 +1,22 @@
 import axios from "axios";
-import { apiPrefix, headers } from "../constants/common";
+import { apiPrefix, headerss } from "../constants/common";
 
-export function makeApiCall (method, endpoint, data = null, customHeaders) {
+export function makeApiCall (method, endpoint, data = null, headers = headerss, customHeaders = null) {
     let FD;
     const options = {
       method,
       "url": `${apiPrefix}${endpoint}`,
-      "headers": method === 'post' ? headers : customHeaders ? customHeaders : {Authorization: headers.Authorization}
+      "headers": method === 'post' ? {
+        "Content-Type": "multipart/form-data",
+        "Authorization": `Bearer ${(window.localStorage.getItem('token') ? JSON.stringify(window.localStorage.getItem('token')).replace('"', '') : '')}`
+    }  : customHeaders ? customHeaders : {
+        Authorization: headers.Authorization ? 
+          headers.Authorization : 
+          `Bearer ${(window.localStorage.getItem('token') ? JSON.stringify(window.localStorage.getItem('token')).replace('"', '') : '')}`
+      }
     }
+
+    console.log(options);
 
     if(data) {
       FD = new FormData();

@@ -11,7 +11,7 @@ import { withForm } from "../../../HOC/withForm";
 
 const FormCertificaties = ({valuesFromStore, initialState}) => {
 
-   const [inputs, setInputs] = useState(valuesFromStore.length > 0 ? valuesFromStore : initialState);
+   const [inputs, setInputs] = useState(valuesFromStore.length > 0 ? [...valuesFromStore, ...initialState] : initialState);
    const { setValues: setFormikValues} = useFormikContext();
 
    useEffect(() => {

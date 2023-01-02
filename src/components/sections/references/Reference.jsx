@@ -13,7 +13,7 @@ import uuid from 'react-uuid';
 
 const Reference = () => {
 
-   const reference = useSelector((state) => state.reference.references);
+   let reference = useSelector((state) => state.reference.references);
    const loading = useSelector((state) => state.app.loading);
 
    if(loading) {
@@ -28,7 +28,7 @@ const Reference = () => {
          >
          </HeadMainContent>
          <FormReference
-            className={`row r-gap-30`}
+            className={`row r-gap-30 mt-4`}
             skipButton={true}
             initialState={initialState}
             valuesFromStore={reference}

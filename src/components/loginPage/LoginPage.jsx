@@ -60,7 +60,6 @@ const LoginPage = () => {
          localStorage.setItem('token', res.data.token);
       })
       .then(res=> {
-         alert('then');
          async function fetchData(){
             try {
                await dispatch(getAppData());
