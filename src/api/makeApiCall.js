@@ -16,8 +16,6 @@ export function makeApiCall (method, endpoint, data = null, headers = headerss, 
       }
     }
 
-    console.log(options);
-
     if(data) {
       FD = new FormData();
       for (const [name, value] of Object.entries(data)) {

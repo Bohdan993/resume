@@ -129,7 +129,11 @@ const FormEducation = (props) => {
                <InputRemove></InputRemove>
             </CCol>
             <CCol xs={6}>
-               <CFormSelect className="custom-select" >
+               <CFormSelect className="custom-select" 
+                  onChange={(e)=> handleInput(e, 'awards')}
+                  value={localEducation.awards || ''}
+               
+               >
                   <option>Open this select menu</option>
                   <option value="1">One</option>
                   <option value="2">Two</option>
@@ -165,7 +169,8 @@ export default withFormik({
            'period_from': '',
            'peiod_to': '',
            'study': '',
-           'description': ''
+           'description': '',
+           'awards': ''
          }
  
          return initialValues;

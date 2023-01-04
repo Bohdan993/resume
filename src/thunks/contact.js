@@ -14,7 +14,7 @@ export const getContact = () => async (dispatch, getState) => {
         const arr = Object.entries(result.data[0]);
         const newArr = arr.map(([key, value]) => {
             if(dateArr.includes(key)) {
-                return [camelToSnakeCase(key), new Date(value).toString()];
+                return [camelToSnakeCase(key), new Date(value).toString() === 'Invalid Date' ? null : new Date(value).toString()];
             }
             return [camelToSnakeCase(key), value];
         })

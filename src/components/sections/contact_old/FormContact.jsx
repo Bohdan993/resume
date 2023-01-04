@@ -129,7 +129,7 @@ const FormContact = () => {
                {/* <CFormInput onChange={(e) => setDate(e.target.value)} value={date} type="date" floatingLabel="Date of birth" placeholder="Date of birth" /> */}
                <DatePicker
                   selected={date ? new Date(date) : date}
-                  onChange={(date) => setDate(date.toString())}
+                  onChange={(date) => setDate(date?.toString())}
                   placeholderText="Date of birth"
                   name="date_of_birth"
                   calendarClassName="custom-datepicker"

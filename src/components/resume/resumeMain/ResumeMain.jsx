@@ -22,6 +22,8 @@ const ResumeMain = () => {
    const reference = useSelector((state) => state.reference.references);
    const activity = useSelector((state) => state.activity.activitys);
 
+   console.log(skills);
+
    return (
       <div className="resume-main p-4">
          <CRow className="resume-main__row">
@@ -104,35 +106,36 @@ const ResumeMain = () => {
                   if(!(ind%2)) {
                      return (
                         <Fragment key={el?.id}>
-                           <div className="d-flex flex-wrap justify-content-between align-items-center">
-                              <div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center me-4">
+                           <div className="d-flex flex-wrap justify-content-start align-items-center">
+                              {arr?.[ind]?.name ? (<div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center me-4">
                                  <div className="resume-main__head-text" style={{fontWeight: 350}}>
-                                    {arr[ind]?.name}
+                                    {arr?.[ind]?.name}
                                  </div>
                                  <div className="resume-main__head-text">
                                  <ReactStars
-                                    key={arr[ind]?.name + '-' + arr[ind]?.level}
+                                    key={arr?.[ind]?.name + '-' + arr?.[ind]?.level}
                                     edit={false}
                                     count={5}
-                                    value={arr[ind]?.level ? Number(arr[ind]?.level) : 0}
+                                    value={arr?.[ind]?.level ? Number(arr?.[ind]?.level) : 0}
                                     size={12}
                                     activeColor={'#6DC26C'} />
                                  </div>
-                              </div>
-                              <div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center">
+                              </div>) : null}
+                              {arr?.[ind + 1]?.name ? (<div className="resume-main__head-info2 mb-2 d-flex flex-wrap gap-3 justify-content-start align-items-center">
                                  <div className="resume-main__head-text" style={{fontWeight: 350}}>
-                                    {arr[ind + 1]?.name}
+                                    {arr?.[ind + 1]?.name}
                                  </div>
                                  <div className="resume-main__head-text">
                                     <ReactStars
-                                       key={arr[ind + 1]?.name + '-' + arr[ind + 1]?.level}
+                                       key={arr?.[ind + 1]?.name + '-' + arr?.[ind + 1]?.level}
                                        edit={false}
                                        count={5}
-                                       value={arr[ind + 1]?.level ? Number(arr[ind + 1]?.level) : 0}
+                                       value={arr?.[ind + 1]?.level ? Number(arr?.[ind + 1]?.level) : 0}
                                        size={12}
                                        activeColor={'#6DC26C'} />
                                  </div>
-                              </div>
+                              </div>): null}
+
                            </div>
                         </Fragment>
                      );
@@ -257,7 +260,6 @@ const ResumeMain = () => {
             </CCol>
             <CCol className="resume-main__col2">
                {languages.map((el, ind, arr) => {
-                  console.log(arr[ind]);
                   if(!(ind%2)) {
                      return (
                         <Fragment key={el?.id}>

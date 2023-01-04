@@ -31,8 +31,10 @@ const FormSkill = ({ visibleRating, valuesFromStore, ...rest }) => {
       const selectedItemsFromStore = valuesFromStore.map(el => {
          return {...el, selected: true}
       });
+
+      console.log(selectedItemsFromStore);
       const localInitialSkills = [...selectedItemsFromStore, ...initialSkills];
-      return getUniq(localInitialSkills, 'name')
+      return getUniq(localInitialSkills, 'name');
    }, [valuesFromStore]);
 
    const selectedItems = localSkills.filter(({ selected }) => selected === true);
@@ -42,6 +44,8 @@ const FormSkill = ({ visibleRating, valuesFromStore, ...rest }) => {
    const [skills, setSkils] = useState(localSkills);
    const [localSelectedItems, setSelectedItems] = useState(selectedItems);
    const [localNotSelectedItems, setNotSelectedItems] = useState(notSelectedItems);
+
+   console.log(skills);
 
 
    const ratingChanged = (newRating, id) => {

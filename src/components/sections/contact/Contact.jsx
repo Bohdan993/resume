@@ -11,6 +11,8 @@ const Contact = () => {
    const loading = useSelector((state) => state.app.loading);
    const country = useSelector((state) => state.country.countrys);
 
+   console.log(contact);
+
    const [valuesExist, setValuesExist] = useState(false);
 
    useEffect(()=>{

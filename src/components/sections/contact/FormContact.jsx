@@ -124,7 +124,7 @@ const FormContact = (props) => {
                 /> */}
                <DatePicker
                   selected={date ? new Date(date) : date}
-                  onChange={(date) => setDate(date.toString())}
+                  onChange={(date) => setDate(date?.toString())}
                   onBlur={handleBlur} 
                   placeholderText="Date of birth"
                   name="date_of_birth"

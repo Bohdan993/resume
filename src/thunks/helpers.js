@@ -11,7 +11,7 @@ export const makeCreate = (name, apiFunc = Promise.resolve()) => {
         const newValues = [];
     
         values.forEach((current) => {
-            if (!(storeValues.some((el) => el.id === current.id))) {
+            if (storeValues.every((el) => el.id !== current.id)) {
                 newValues.push(current);
             }
         });
@@ -57,7 +57,7 @@ export const makeGet = (name, apiFunc = Promise.resolve(), setData) => {
                 const arr = Object.entries(el);
                 const newArr = arr.map(([key, value]) => {
                     if(dateArr.includes(key)) {
-                        return [camelToSnakeCase(key).replace('date', 'period'), new Date(value.date).toString()];
+                        return [camelToSnakeCase(key).replace('date', 'period'), new Date(value.date).toString() === 'Invalid Date' ? null : new Date(value.date).toString()];
                     }
                     return [camelToSnakeCase(key), value];
                 });
